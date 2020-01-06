@@ -1,0 +1,786 @@
+openapi: 3.0.0
+info:
+  title: Publisher Managing
+  version: '1.0'
+  description: Admin methods for managing publishers
+  contact:
+    name: Support
+    url: 'https://trackier.com/support'
+    email: support@trackier.com
+servers:
+  - url: 'https://api.trackier.com/v2'
+paths:
+  /publishers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        email:
+                          type: string
+                        country:
+                          type: string
+                        created:
+                          type: string
+                        modified:
+                          type: string
+                        username:
+                          type: string
+                        phone:
+                          type: string
+                        login:
+                          type: string
+                        manager_id:
+                          type: string
+                        tier_id:
+                          type: string
+                        status:
+                          type: string
+                        unsubscribe:
+                          type: string
+                        macro:
+                          type: object
+                          properties:
+                            p1:
+                              type: string
+                            p2:
+                              type: string
+                            p3:
+                              type: string
+                        hashId:
+                          type: string
+                        id:
+                          type: integer
+                        whitelistAdv:
+                          type: array
+                          items:
+                            type: integer
+                        blockedSources:
+                          type: array
+                          items:
+                            type: string
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                        meta:
+                          type: object
+                          properties:
+                            afields:
+                              type: object
+                            bank:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                ifsc:
+                                  type: string
+                                account_no:
+                                  type: string
+                                account_owner:
+                                  type: string
+                        region:
+                          type: object
+                          properties:
+                            currency:
+                              type: string
+                            lang:
+                              type: string
+                            address:
+                              type: string
+                            city:
+                              type: string
+                            zipcode:
+                              type: string
+              examples:
+                example-1:
+                  value:
+                    publishers:
+                      - region:
+                          currency: USD
+                          zone: Asia/Kolkata
+                          lang: en
+                          address: D-96 Flat no -112 5th Floor Munirika Village
+                          city: New Delhi
+                          zipcode: '110067'
+                          country: IN
+                        meta:
+                          bank:
+                            name: ''
+                            ifsc: ''
+                            account_no: ''
+                            account_owner: ''
+                          payout:
+                            paypal: ''
+                            payquicker: ''
+                            payoneer: ''
+                            paytm: alb_magji@hotmail.uk
+                            mobicash: ''
+                            easypaisa: ''
+                          tdomain: []
+                        tags:
+                          - top publisher
+                          - demo account
+                        name: Pied Piper
+                        email: subhomoy@trackier.com
+                        country: IN
+                        currency: INR
+                        created: '2016-09-19T18:30:00.000Z'
+                        modified: '2019-12-13T05:06:32.406Z'
+                        username: '#PiedPiper'
+                        phone: '8811576958'
+                        login: '2017-10-28T06:27:06.000Z'
+                        login_attempts: 1
+                        manager_id: 5d25b773b6920d39cf195611
+                        tier_id: 594400fa17c452060005e362
+                        status: active
+                        unsubscribe: false
+                        signup_ip: 1.1.1.1
+                        company: Pied piper
+                        is_demo: false
+                        macro:
+                          source: '{aff_id}'
+                          p1: '{transaction_id}'
+                          p8: '{aff_sub8}'
+                          p9: '{aff_sub9}'
+                          p10: '{aff_sub10}'
+                        hashId: 57c6c75934243d930c8b4581
+                        id: 2
+                        whitelistAdv: []
+                        blockedSources:
+                          - hemant_testing
+                      - region:
+                          currency: USD
+                          zone: Asia/Kolkata
+                          lang: en
+                        meta:
+                          payout:
+                            paypal: ''
+                            payquicker: ''
+                            payoneer: ''
+                            paytm: ''
+                            mobicash: ''
+                            easypaisa: ''
+                        tags: []
+                        name: test pub
+                        email: sales@s2ssoftsys.in
+                        country: IN
+                        currency: INR
+                        created: '2016-09-21T00:00:00.000Z'
+                        modified: '2019-12-13T05:06:32.481Z'
+                        username: test pub
+                        phone: null
+                        login: null
+                        manager_id: 5d78cae3b6920d28be58cc1a
+                        login_attempts: null
+                        tier_id: null
+                        status: deleted
+                        unsubscribe: false
+                        is_demo: false
+                        macro:
+                          p1: '{your-transaction-id}'
+                          source: '{your-sub-aff-id}'
+                        hashId: 57e262141d41c81f2b04b8d0
+                        id: 5
+                        whitelistAdv: []
+                        blockedSources: []
+      operationId: get-publishers
+      description: Get all publishers
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          description: API Key required for authentication
+    post:
+      summary: ''
+      operationId: post-publishers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publisher:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      country:
+                        type: string
+                      created:
+                        type: string
+                      modified:
+                        type: string
+                      username:
+                        type: string
+                      phone:
+                        type: string
+                      login:
+                        type: string
+                      manager_id:
+                        type: string
+                      tier_id:
+                        type: string
+                      status:
+                        type: string
+                      unsubscribe:
+                        type: string
+                      macro:
+                        type: object
+                        properties:
+                          p1:
+                            type: string
+                          p2:
+                            type: string
+                          p3:
+                            type: string
+                      hashId:
+                        type: string
+                      id:
+                        type: integer
+                      whitelistAdv:
+                        type: array
+                        items:
+                          type: integer
+                      blockedSources:
+                        type: array
+                        items:
+                          type: string
+                      tags:
+                        type: array
+                        items:
+                          type: string
+                      meta:
+                        type: object
+                        properties:
+                          afields:
+                            type: object
+                          bank:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              ifsc:
+                                type: string
+                              account_no:
+                                type: string
+                              account_owner:
+                                type: string
+                      region:
+                        type: object
+                        properties:
+                          currency:
+                            type: string
+                          lang:
+                            type: string
+                          address:
+                            type: string
+                          city:
+                            type: string
+                          zipcode:
+                            type: string
+              examples:
+                example-1:
+                  value:
+                    publisher:
+                      region:
+                        currency: USD
+                        zone: Asia/Kolkata
+                        lang: en
+                        address: D-96 Flat no -112 5th Floor Munirika Village
+                        city: New Delhi
+                        zipcode: '110067'
+                        country: IN
+                      meta:
+                        bank:
+                          name: ''
+                          ifsc: ''
+                          account_no: ''
+                          account_owner: ''
+                      tags:
+                        - top publisher
+                        - demo account
+                      name: test pub
+                      email: support@trackier.com
+                      country: IN
+                      currency: INR
+                      created: '2016-09-19T18:30:00.000Z'
+                      modified: '2019-12-13T05:06:32.406Z'
+                      username: '#PiedPiper'
+                      phone: '8811576958'
+                      login: '2017-10-28T06:27:06.000Z'
+                      login_attempts: 1
+                      manager_id: 5d25b773b6920d39cf195611
+                      tier_id: 594400fa17c452060005e362
+                      status: active
+                      unsubscribe: false
+                      signup_ip: 1.1.1.1
+                      company: Pied piper
+                      is_demo: false
+                      macro:
+                        source: '{aff_id}'
+                        p1: '{transaction_id}'
+                        p8: '{aff_sub8}'
+                        p9: '{aff_sub9}'
+                        p10: '{aff_sub10}'
+                      hashId: 57c6c75934243d930c8b4581
+                      id: 2
+                      whitelistAdv: []
+                      blockedSources:
+                        - hemant_testing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        statusCode:
+                          type: integer
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        codeMsg:
+                          type: string
+              examples:
+                example-1:
+                  value:
+                    errors:
+                      - statusCode: 400
+                        code: '4002'
+                        codeMsg: ValidationError
+                        message: Please fill the required fields
+      description: Create a new publisher
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                phone:
+                  type: string
+                username:
+                  type: string
+                company:
+                  type: string
+                customFields:
+                  type: object
+              required:
+                - name
+                - email
+                - password
+            examples:
+              example-1:
+                value:
+                  name: hemant
+                  password: '12345566'
+                  email: sdfsdf22@g.com
+                  phone: '123456789'
+                  username: '123'
+                  company: Trackier api v2
+                  customFields:
+                    testing: '123'
+                    country: IN
+        description: Data to be sent to create a new publisher
+  '/publishers/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Publisher ID
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publisher:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      region:
+                        type: object
+                        properties:
+                          currency:
+                            type: string
+                          lang:
+                            type: string
+                          address:
+                            type: string
+                          city:
+                            type: string
+                          zipcode:
+                            type: string
+                      meta:
+                        type: object
+                        properties:
+                          afields:
+                            type: object
+                          bank:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              ifsc:
+                                type: string
+                              account_no:
+                                type: string
+                              account_owner:
+                                type: string
+                      tags:
+                        type: array
+                        items:
+                          type: string
+                      blockedSources:
+                        type: array
+                        items:
+                          type: string
+                      whitelistAdv:
+                        type: array
+                        items:
+                          type: integer
+                      id:
+                        type: integer
+                      hashId:
+                        type: string
+                      macro:
+                        type: object
+                        properties:
+                          p1:
+                            type: string
+                          p2:
+                            type: string
+                          p3:
+                            type: string
+                      unsubscribe:
+                        type: string
+                      status:
+                        type: string
+                      tier_id:
+                        type: string
+                      manager_id:
+                        type: string
+                      login:
+                        type: string
+                      phone:
+                        type: string
+                      username:
+                        type: string
+                      modified:
+                        type: string
+                      created:
+                        type: string
+                      country:
+                        type: string
+                      email:
+                        type: string
+              examples:
+                example-1:
+                  value:
+                    publisher:
+                      region:
+                        currency: USD
+                        zone: Asia/Kolkata
+                        lang: en
+                        address: D-96 Flat no -112 5th Floor Munirika Village
+                        city: New Delhi
+                        zipcode: '110067'
+                        country: IN
+                      meta:
+                        bank:
+                          name: ''
+                          ifsc: ''
+                          account_no: ''
+                          account_owner: ''
+                      tags:
+                        - top publisher
+                        - demo account
+                      name: test pub
+                      email: support@trackier.com
+                      country: IN
+                      currency: INR
+                      created: '2016-09-19T18:30:00.000Z'
+                      modified: '2019-12-13T05:06:32.406Z'
+                      username: '#PiedPiper'
+                      phone: '8811576958'
+                      login: '2017-10-28T06:27:06.000Z'
+                      login_attempts: 1
+                      manager_id: 5d25b773b6920d39cf195611
+                      tier_id: 594400fa17c452060005e362
+                      status: active
+                      unsubscribe: false
+                      signup_ip: 1.1.1.1
+                      company: Pied piper
+                      is_demo: false
+                      macro:
+                        source: '{aff_id}'
+                        p1: '{transaction_id}'
+                        p8: '{aff_sub8}'
+                        p9: '{aff_sub9}'
+                        p10: '{aff_sub10}'
+                      hashId: 57c6c75934243d930c8b4581
+                      id: 2
+                      whitelistAdv: []
+                      blockedSources:
+                        - hemant_testing
+      operationId: get-publishers-id
+      description: Get a single publisher
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+    delete:
+      summary: ''
+      operationId: delete-publishers-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                example-1:
+                  value:
+                    success: true
+                    message: 'Publisher Removed!'
+      description: Delete a publisher with given ID
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+    post:
+      summary: ''
+      operationId: post-publishers-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publisher:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      region:
+                        type: object
+                        properties:
+                          currency:
+                            type: string
+                          lang:
+                            type: string
+                          address:
+                            type: string
+                          city:
+                            type: string
+                          zipcode:
+                            type: string
+                      meta:
+                        type: object
+                        properties:
+                          afields:
+                            type: object
+                          bank:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              ifsc:
+                                type: string
+                              account_no:
+                                type: string
+                              account_owner:
+                                type: string
+                      tags:
+                        type: array
+                        items:
+                          type: string
+                      blockedSources:
+                        type: array
+                        items:
+                          type: string
+                      whitelistAdv:
+                        type: array
+                        items:
+                          type: integer
+                      id:
+                        type: integer
+                      hashId:
+                        type: string
+                      macro:
+                        type: object
+                        properties:
+                          p1:
+                            type: string
+                          p2:
+                            type: string
+                          p3:
+                            type: string
+                      unsubscribe:
+                        type: string
+                      status:
+                        type: string
+                      tier_id:
+                        type: string
+                      manager_id:
+                        type: string
+                      login:
+                        type: string
+                      phone:
+                        type: string
+                      username:
+                        type: string
+                      modified:
+                        type: string
+                      created:
+                        type: string
+                      country:
+                        type: string
+                      email:
+                        type: string
+              examples:
+                example-1:
+                  value:
+                    publisher:
+                      region:
+                        currency: USD
+                        zone: Asia/Kolkata
+                        lang: en
+                        address: D-96 Flat no -112 5th Floor Munirika Village
+                        city: New Delhi
+                        zipcode: '110067'
+                        country: IN
+                      meta:
+                        bank:
+                          name: ''
+                          ifsc: ''
+                          account_no: ''
+                          account_owner: ''
+                        payout:
+                          paypal: ''
+                          payquicker: ''
+                          payoneer: ''
+                          paytm: alb_magji@hotmail.uk
+                          mobicash: ''
+                          easypaisa: ''
+                        tdomain: []
+                      tags:
+                        - top publisher
+                        - demo account
+                      name: Pied Piper
+                      email: subhomoy@trackier.com
+                      country: IN
+                      currency: INR
+                      created: '2016-09-19T18:30:00.000Z'
+                      modified: '2019-12-13T05:06:32.406Z'
+                      username: '#PiedPiper'
+                      phone: '8811576958'
+                      login: '2017-10-28T06:27:06.000Z'
+                      login_attempts: 1
+                      manager_id: 5d25b773b6920d39cf195611
+                      tier_id: 594400fa17c452060005e362
+                      status: active
+                      unsubscribe: false
+                      signup_ip: 1.1.1.1
+                      company: Pied piper
+                      is_demo: false
+                      macro:
+                        source: '{aff_id}'
+                        p1: '{transaction_id}'
+                        p8: '{aff_sub8}'
+                        p9: '{aff_sub9}'
+                        p10: '{aff_sub10}'
+                      hashId: 57c6c75934243d930c8b4581
+                      id: 2
+                      whitelistAdv: []
+                      blockedSources:
+                        - hemant_testing
+      description: Edit a publisher
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                phone:
+                  type: string
+                country:
+                  type: string
+            examples:
+              example-1:
+                value:
+                  name: himanshu4
+                  status: active
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        description: Properties to be sent in request
+components:
+  schemas: {}
