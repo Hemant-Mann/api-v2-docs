@@ -205,6 +205,7 @@ paths:
           in: header
           name: x-api-key
           description: API Key required for authentication
+          required: true
     post:
       summary: Create a new publisher
       operationId: post-publishers
@@ -380,6 +381,7 @@ paths:
             type: string
           in: header
           name: x-api-key
+          required: true
       requestBody:
         content:
           application/json:
@@ -573,6 +575,7 @@ paths:
             type: string
           in: header
           name: x-api-key
+          required: true
     delete:
       summary: Delete a publisher
       operationId: delete-publishers-id
@@ -599,6 +602,7 @@ paths:
             type: string
           in: header
           name: x-api-key
+          required: true
     post:
       summary: Edit a publisher
       operationId: post-publishers-id
@@ -754,6 +758,7 @@ paths:
             type: string
           in: header
           name: x-api-key
+          required: true
       requestBody:
         content:
           application/json:
