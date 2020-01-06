@@ -12,7 +12,7 @@ servers:
 paths:
   /publishers:
     get:
-      summary: Your GET endpoint
+      summary: Get All Publishers
       tags: []
       responses:
         '200':
@@ -206,7 +206,7 @@ paths:
           name: x-api-key
           description: API Key required for authentication
     post:
-      summary: ''
+      summary: Create a new publisher
       operationId: post-publishers
       responses:
         '200':
@@ -426,7 +426,7 @@ paths:
         required: true
         description: Publisher ID
     get:
-      summary: Your GET endpoint
+      summary: Find Publisher by ID
       tags: []
       responses:
         '200':
@@ -574,7 +574,7 @@ paths:
           in: header
           name: x-api-key
     delete:
-      summary: ''
+      summary: Delete a publisher
       operationId: delete-publishers-id
       responses:
         '200':
@@ -600,7 +600,7 @@ paths:
           in: header
           name: x-api-key
     post:
-      summary: ''
+      summary: Edit a publisher
       operationId: post-publishers-id
       responses:
         '200':
