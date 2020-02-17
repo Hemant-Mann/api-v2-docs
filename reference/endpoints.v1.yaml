@@ -8,9 +8,9 @@ info:
     url: 'https://trackier.com/support'
     email: support@trackier.com
 servers:
-  - url: 'https://api.trackier.com/v2/'
+  - url: 'https://api.trackier.com/'
 paths:
-  publishers:
+  /v2/publishers:
     get:
       summary: Get All Publishers
       tags: []
@@ -420,7 +420,7 @@ paths:
                     country: IN
         description: Data to be sent to create a new publisher
     parameters: []
-  'publishers/{id}':
+  '/v2/publishers/{id}':
     parameters:
       - schema:
           type: integer
