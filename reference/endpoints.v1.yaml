@@ -25,86 +25,11 @@ paths:
                   publishers:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        email:
-                          type: string
-                        country:
-                          type: string
-                        created:
-                          type: string
-                        modified:
-                          type: string
-                        username:
-                          type: string
-                        phone:
-                          type: string
-                        login:
-                          type: string
-                        manager_id:
-                          type: string
-                        tier_id:
-                          type: string
-                        status:
-                          type: string
-                        unsubscribe:
-                          type: string
-                        macro:
-                          type: object
-                          properties:
-                            p1:
-                              type: string
-                            p2:
-                              type: string
-                            p3:
-                              type: string
-                        hashId:
-                          type: string
-                        id:
-                          type: integer
-                        whitelistAdv:
-                          type: array
-                          items:
-                            type: integer
-                        blockedSources:
-                          type: array
-                          items:
-                            type: string
-                        tags:
-                          type: array
-                          items:
-                            type: string
-                        meta:
-                          type: object
-                          properties:
-                            afields:
-                              type: object
-                            bank:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                ifsc:
-                                  type: string
-                                account_no:
-                                  type: string
-                                account_owner:
-                                  type: string
-                        region:
-                          type: object
-                          properties:
-                            currency:
-                              type: string
-                            lang:
-                              type: string
-                            address:
-                              type: string
-                            city:
-                              type: string
-                            zipcode:
-                              type: string
+                      $ref: '#/components/schemas/Publisher'
+                  lastId:
+                    type:
+                      - number
+                      - 'null'
               examples:
                 example-1:
                   value:
@@ -206,6 +131,11 @@ paths:
           name: x-api-key
           description: API Key required for authentication
           required: true
+        - schema:
+            type: string
+          in: query
+          name: lastId
+          description: If lastId param is present in the request then we need to send this param in the request to get the next set of rows
     post:
       summary: Create a new publisher
       operationId: post-publishers
@@ -218,86 +148,7 @@ paths:
                 type: object
                 properties:
                   publisher:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      email:
-                        type: string
-                      country:
-                        type: string
-                      created:
-                        type: string
-                      modified:
-                        type: string
-                      username:
-                        type: string
-                      phone:
-                        type: string
-                      login:
-                        type: string
-                      manager_id:
-                        type: string
-                      tier_id:
-                        type: string
-                      status:
-                        type: string
-                      unsubscribe:
-                        type: string
-                      macro:
-                        type: object
-                        properties:
-                          p1:
-                            type: string
-                          p2:
-                            type: string
-                          p3:
-                            type: string
-                      hashId:
-                        type: string
-                      id:
-                        type: integer
-                      whitelistAdv:
-                        type: array
-                        items:
-                          type: integer
-                      blockedSources:
-                        type: array
-                        items:
-                          type: string
-                      tags:
-                        type: array
-                        items:
-                          type: string
-                      meta:
-                        type: object
-                        properties:
-                          afields:
-                            type: object
-                          bank:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              ifsc:
-                                type: string
-                              account_no:
-                                type: string
-                              account_owner:
-                                type: string
-                      region:
-                        type: object
-                        properties:
-                          currency:
-                            type: string
-                          lang:
-                            type: string
-                          address:
-                            type: string
-                          city:
-                            type: string
-                          zipcode:
-                            type: string
+                    $ref: '#/components/schemas/Publisher'
               examples:
                 example-1:
                   value:
@@ -386,26 +237,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                phone:
-                  type: string
-                username:
-                  type: string
-                company:
-                  type: string
-                customFields:
-                  type: object
-              required:
-                - name
-                - email
-                - password
+              $ref: '#/components/schemas/UserCreate'
             examples:
               example-1:
                 value:
@@ -440,86 +272,7 @@ paths:
                 type: object
                 properties:
                   publisher:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      region:
-                        type: object
-                        properties:
-                          currency:
-                            type: string
-                          lang:
-                            type: string
-                          address:
-                            type: string
-                          city:
-                            type: string
-                          zipcode:
-                            type: string
-                      meta:
-                        type: object
-                        properties:
-                          afields:
-                            type: object
-                          bank:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              ifsc:
-                                type: string
-                              account_no:
-                                type: string
-                              account_owner:
-                                type: string
-                      tags:
-                        type: array
-                        items:
-                          type: string
-                      blockedSources:
-                        type: array
-                        items:
-                          type: string
-                      whitelistAdv:
-                        type: array
-                        items:
-                          type: integer
-                      id:
-                        type: integer
-                      hashId:
-                        type: string
-                      macro:
-                        type: object
-                        properties:
-                          p1:
-                            type: string
-                          p2:
-                            type: string
-                          p3:
-                            type: string
-                      unsubscribe:
-                        type: string
-                      status:
-                        type: string
-                      tier_id:
-                        type: string
-                      manager_id:
-                        type: string
-                      login:
-                        type: string
-                      phone:
-                        type: string
-                      username:
-                        type: string
-                      modified:
-                        type: string
-                      created:
-                        type: string
-                      country:
-                        type: string
-                      email:
-                        type: string
+                    $ref: '#/components/schemas/Publisher'
               examples:
                 example-1:
                   value:
@@ -616,86 +369,7 @@ paths:
                 type: object
                 properties:
                   publisher:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      region:
-                        type: object
-                        properties:
-                          currency:
-                            type: string
-                          lang:
-                            type: string
-                          address:
-                            type: string
-                          city:
-                            type: string
-                          zipcode:
-                            type: string
-                      meta:
-                        type: object
-                        properties:
-                          afields:
-                            type: object
-                          bank:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              ifsc:
-                                type: string
-                              account_no:
-                                type: string
-                              account_owner:
-                                type: string
-                      tags:
-                        type: array
-                        items:
-                          type: string
-                      blockedSources:
-                        type: array
-                        items:
-                          type: string
-                      whitelistAdv:
-                        type: array
-                        items:
-                          type: integer
-                      id:
-                        type: integer
-                      hashId:
-                        type: string
-                      macro:
-                        type: object
-                        properties:
-                          p1:
-                            type: string
-                          p2:
-                            type: string
-                          p3:
-                            type: string
-                      unsubscribe:
-                        type: string
-                      status:
-                        type: string
-                      tier_id:
-                        type: string
-                      manager_id:
-                        type: string
-                      login:
-                        type: string
-                      phone:
-                        type: string
-                      username:
-                        type: string
-                      modified:
-                        type: string
-                      created:
-                        type: string
-                      country:
-                        type: string
-                      email:
-                        type: string
+                    $ref: '#/components/schemas/Publisher'
               examples:
                 example-1:
                   value:
@@ -764,20 +438,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                username:
-                  type: string
-                password:
-                  type: string
-                phone:
-                  type: string
-                country:
-                  type: string
+              $ref: '#/components/schemas/UserEdit'
             examples:
               example-1:
                 value:
@@ -788,5 +449,521 @@ paths:
               type: object
               properties: {}
         description: Properties to be sent in request
+  /v2/advertisers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  advertisers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Advertiser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+      operationId: get-v2-advertisers
+    post:
+      summary: ''
+      operationId: post-v2-advertisers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  advertiser:
+                    $ref: '#/components/schemas/Advertiser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+  '/v2/advertisers/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  advertiser:
+                    $ref: '#/components/schemas/Advertiser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+      operationId: get-v2-advertisers-id
+    post:
+      summary: ''
+      operationId: post-v2-advertisers-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  advertiser:
+                    $ref: '#/components/schemas/Advertiser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Advertiser'
+            examples:
+              example-1: {}
+    delete:
+      summary: ''
+      operationId: delete-v2-advertisers-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: '{id}'
 components:
-  schemas: {}
+  schemas:
+    Publisher:
+      title: Publisher
+      type: object
+      x-examples:
+        sample publisher object:
+          tags:
+            - hemant
+          name: account
+          email: hemant@vnative.com
+          phone: '9999885566'
+          region:
+            currency: USD
+            lang: en
+          created: '2017-08-29T11:05:15.000Z'
+          unsubscribe: false
+          status: active
+          modified: '2019-12-13T05:06:34.030Z'
+          manager_id: 5c6e4af3b6920d6a02002f53
+          username: vNative Account
+          tier_id: 5943b5d6b6920d248f26fd37
+          login: null
+          login_attempts: null
+          signup_ip: null
+          company: vNative Account
+          is_demo: false
+          hide_camp: null
+          macro:
+            source: hemant
+            p1: test
+          hashId: 59a54a6b89d4465afb339a32
+          id: 31
+          whitelistAdv: null
+          blockedSources:
+            - hemant_testing
+            - p1
+            - p2
+          conversionsPending: null
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        login:
+          type: string
+        currency:
+          type: string
+        region:
+          type: object
+          properties:
+            currency:
+              type: string
+            lang:
+              type: string
+            country:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipcode:
+              type: string
+        tags:
+          type: array
+          items:
+            type: string
+        signup_ip:
+          type: string
+        company:
+          type: string
+        status:
+          type: string
+        meta:
+          type: object
+          properties:
+            afields:
+              type: object
+            bank:
+              type: object
+              properties:
+                name:
+                  type: string
+                ifsc:
+                  type: string
+                account_no:
+                  type: string
+                account_owner:
+                  type: string
+        hashId:
+          type: string
+        manager_id:
+          type: string
+        tier_id:
+          type: string
+        unsubscribe:
+          type: string
+        is_demo:
+          type: string
+        whitelistAdv:
+          type: array
+          items:
+            type: integer
+        macro:
+          type: object
+          properties:
+            p1:
+              type: string
+            p2:
+              type: string
+            p3:
+              type: string
+            p4:
+              type: string
+            p5:
+              type: string
+            p6:
+              type: string
+            p7:
+              type: string
+            p8:
+              type: string
+            p9:
+              type: string
+            p10:
+              type: string
+            source:
+              type: string
+            app_name:
+              type: string
+            app_id:
+              type: string
+            gaid:
+              type: string
+        blockedSources:
+          type: array
+          items:
+            type: string
+        conversionsPending:
+          type: integer
+        created:
+          type: string
+        modified:
+          type: string
+    Advertiser:
+      title: Advertiser
+      type: object
+      properties:
+        id:
+          type: number
+        hashId:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        login:
+          type: string
+        login_attempts:
+          type: integer
+        currency:
+          type: string
+        region:
+          type: object
+          properties:
+            currency:
+              type: string
+            lang:
+              type: string
+            country:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipcode:
+              type: string
+        tags:
+          type: array
+          items:
+            type: string
+        signup_ip:
+          type: string
+        company:
+          type: string
+        status:
+          type: string
+        meta:
+          type: object
+          properties:
+            afields:
+              type: object
+            security_token:
+              type: string
+        fallbackUrl:
+          type: string
+        blockedPubs:
+          type: array
+          items:
+            type: number
+        created:
+          type: string
+        modified:
+          type: string
+        redirectType:
+          type: string
+      x-examples:
+        sample advertiser object:
+          tags: null
+          blocked_pubs: null
+          name: Demo Advertiser
+          email: inf@vnative.com
+          currency: INR
+          meta:
+            security_token: b50346a1c529c82dac33
+          created: '1970-01-01T00:00:00.000Z'
+          modified: '2019-10-17T18:32:59.608Z'
+          username: Vnative
+          phone: '998855644'
+          region:
+            currency: USD
+            lang: en
+            country: ''
+          login: '2017-10-30T08:39:27.000Z'
+          login_attempts: null
+          signup_ip: null
+          status: active
+          company: Demo
+          unique_conv_ip: '0'
+          check_links: null
+          fallback_url: 'http://vnative.com/advertiser-fallback-url2?utm_source={publisher_id}&amp;utm_campaign={camp_id}&amp;utm_traffic={publisher_id}_{source}'
+          redirect_type: '302'
+          hashId: 57c4738434243dc57d8b456d
+          id: 3
+    Error:
+      title: Error
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        code:
+          type: string
+        codeMsg:
+          type: string
+        message:
+          type: string
+      x-examples:
+        error code sample:
+          statusCode: 400
+          code: '101'
+          codeMsg: API_KEY_MISSING
+          message: API Key is not found in request headers or query params
+    UserCreate:
+      title: UserCreate
+      type: object
+      description: ''
+      properties:
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        country:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - pending
+            - disabled
+        region:
+          type: object
+          properties:
+            lang:
+              type: string
+            currency:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipcode:
+              type: string
+        customFields:
+          type: object
+      required:
+        - name
+        - email
+        - password
+      x-examples:
+        user create sample:
+          name: Hemant
+          email: hemant@gmail.com
+          password: '12345678'
+    UserEdit:
+      title: UserEdit
+      type: object
+      properties:
+        username:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        country:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - pending
+            - disabled
+        region:
+          type: object
+          properties:
+            lang:
+              type: string
+            currency:
+              type: string
+            country:
+              type: string
+            address:
+              type: string
+            state:
+              type: string
+            city:
+              type: string
+            zipcode:
+              type: string
+        customFields:
+          type: object
+      x-examples:
+        user edit example:
+          name: Hemant
+          status: pending
+  securitySchemes:
+    API Key:
+      name: API Key Param
+      type: apiKey
+      in: query
