@@ -551,7 +551,7 @@ paths:
       operationId: advertiser-findOne
       description: Get a single advertiser
     post:
-      summary: ''
+      summary: Update an Advertiser
       operationId: advertiser-edit
       responses:
         '200':
@@ -615,11 +615,6 @@ paths:
           name: '{id}'
       description: Delete an advertiser
   /v2/login:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-v2-login
     post:
       summary: Basic Login Endpoint
       operationId: login
