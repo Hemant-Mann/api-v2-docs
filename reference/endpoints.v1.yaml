@@ -753,6 +753,7 @@ components:
             - p1
             - p2
           conversionsPending: null
+      description: ''
       properties:
         id:
           type: integer
@@ -762,10 +763,15 @@ components:
           type: string
         email:
           type: string
+          format: email
         phone:
           type: string
         login:
-          type: string
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
         currency:
           type: string
         region:
@@ -790,7 +796,10 @@ components:
           items:
             type: string
         signup_ip:
-          type: string
+          type:
+            - string
+            - 'null'
+          format: ipv4
         company:
           type: string
         status:
@@ -820,7 +829,7 @@ components:
         unsubscribe:
           type: string
         is_demo:
-          type: string
+          type: boolean
         whitelistAdv:
           type: array
           items:
@@ -864,12 +873,17 @@ components:
           type: integer
         created:
           type: string
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
         modified:
           type: string
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
       required:
         - id
         - name
         - email
+        - status
         - hashId
         - created
     Advertiser:
@@ -912,10 +926,15 @@ components:
           type: string
         email:
           type: string
+          format: email
         phone:
           type: string
         login:
-          type: string
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
         login_attempts:
           type: integer
         currency:
@@ -943,10 +962,15 @@ components:
             type: string
         signup_ip:
           type: string
+          format: ipv4
         company:
           type: string
         status:
           type: string
+          enum:
+            - active
+            - pending
+            - disabled
         meta:
           type: object
           properties:
@@ -955,15 +979,22 @@ components:
             security_token:
               type: string
         fallbackUrl:
-          type: string
+          type:
+            - string
+            - 'null'
+          format: uri
         blockedPubs:
           type: array
           items:
             type: number
         created:
           type: string
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
         modified:
           type: string
+          format: date-time
+          example: '2020-01-07T11:10:09.000Z'
         redirectType:
           type: string
         name:
@@ -1001,6 +1032,11 @@ components:
       title: UserCreate
       type: object
       description: ''
+      x-examples:
+        user create sample:
+          name: Hemant
+          email: hemant@gmail.com
+          password: '12345678'
       properties:
         username:
           type: string
@@ -1008,6 +1044,7 @@ components:
           type: string
         email:
           type: string
+          format: email
         password:
           type: string
         company:
@@ -1043,14 +1080,13 @@ components:
         - name
         - email
         - password
-      x-examples:
-        user create sample:
-          name: Hemant
-          email: hemant@gmail.com
-          password: '12345678'
     UserEdit:
       title: UserEdit
       type: object
+      x-examples:
+        user edit example:
+          name: Hemant
+          status: pending
       properties:
         username:
           type: string
@@ -1060,6 +1096,7 @@ components:
           type: string
         email:
           type: string
+          format: email
         company:
           type: string
         phone:
@@ -1091,10 +1128,6 @@ components:
               type: string
         customFields:
           type: object
-      x-examples:
-        user edit example:
-          name: Hemant
-          status: pending
   securitySchemes:
     API Key:
       name: API Key Param
