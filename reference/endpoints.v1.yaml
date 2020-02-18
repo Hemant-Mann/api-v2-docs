@@ -621,8 +621,8 @@ paths:
       responses: {}
       operationId: get-v2-login
     post:
-      summary: ''
-      operationId: post-v2-login
+      summary: Basic Login Endpoint
+      operationId: login
       responses:
         '200':
           description: OK
