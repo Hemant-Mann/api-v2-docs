@@ -488,7 +488,7 @@ paths:
           in: query
           name: lastId
     post:
-      summary: ''
+      summary: Create an advertiser
       operationId: advertiser-create
       responses:
         '200':
@@ -525,7 +525,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Operations on a single advertiser
+      summary: Find a single advertiser
       tags: []
       responses:
         '200':
@@ -583,7 +583,7 @@ paths:
               example-1: {}
       description: Edit a single advertiser
     delete:
-      summary: ''
+      summary: Delete an Advertiser
       operationId: advertiser-delete
       responses:
         '200':
