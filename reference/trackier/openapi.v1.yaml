@@ -1508,7 +1508,22 @@ components:
         payouts:
           type: array
           items:
-            $ref: ./models/payout.v1.yaml
+            type: object
+            properties:
+              payout:
+                type: number
+              revenue:
+                type:
+                  - string
+                  - number
+              geo:
+                type: array
+                items:
+                  type: string
+            required:
+              - payout
+              - revenue
+              - geo
       required:
         - advertiserId
         - title
