@@ -1348,6 +1348,8 @@ components:
               currency: USD
               geo:
                 - US
+      x-tags:
+        - Campaigns
       properties:
         advertiserId:
           type:
@@ -1503,12 +1505,17 @@ components:
             type: integer
         primaryTrackingDomain:
           type: string
+        payouts:
+          type: array
+          items:
+            $ref: ./models/payout.v1.yaml
       required:
+        - advertiserId
         - title
         - url
+        - currency
         - convTracking
-      x-tags:
-        - Campaigns
+        - payouts
     Cap:
       title: Cap
       type: object
