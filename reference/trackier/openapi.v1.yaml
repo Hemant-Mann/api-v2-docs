@@ -139,15 +139,11 @@ paths:
       parameters:
         - schema:
             type: string
-          in: header
-          name: x-api-key
-          description: API Key required for authentication
-          required: true
-        - schema:
-            type: string
           in: query
           name: lastId
           description: If lastId param is present in the request then we need to send this param in the request to get the next set of rows
+      security:
+        - API Key Param: []
     post:
       summary: Create a new publisher
       operationId: publisher-create
@@ -230,12 +226,7 @@ paths:
                         codeMsg: ValidationError
                         message: Please fill the required fields
       description: Create a new publisher
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-api-key
-          required: true
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -256,6 +247,8 @@ paths:
         description: Data to be sent to create a new publisher
       tags:
         - Publishers
+      security:
+        - API Key Param: []
     parameters: []
   '/v2/publishers/{id}':
     parameters:
@@ -341,12 +334,9 @@ paths:
                       $ref: ./models/error.v1.yaml
       operationId: publisher-findAll
       description: Get a single publisher
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-api-key
-          required: true
+      parameters: []
+      security:
+        - API Key Param: []
     delete:
       summary: Delete a publisher
       operationId: publisher-delete
@@ -379,14 +369,11 @@ paths:
                     items:
                       $ref: ./models/error.v1.yaml
       description: Delete a publisher with given ID
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-api-key
-          required: true
+      parameters: []
       tags:
         - Publishers
+      security:
+        - API Key Param: []
     post:
       summary: Edit a publisher
       operationId: publisher-edit
@@ -469,12 +456,7 @@ paths:
                     items:
                       $ref: ''
       description: Edit a publisher
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-api-key
-          required: true
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -492,6 +474,8 @@ paths:
         description: Properties to be sent in request
       tags:
         - Publishers
+      security:
+        - API Key Param: []
   /v2/advertisers:
     get:
       summary: Find All Advertisers
@@ -531,6 +515,8 @@ paths:
             type: string
           in: query
           name: lastId
+      security:
+        - API Key Param: []
     post:
       summary: Create an advertiser
       operationId: advertiser-create
@@ -564,6 +550,8 @@ paths:
       description: Create an advertiser
       tags:
         - Advertisers
+      security:
+        - API Key Param: []
   '/v2/advertisers/{id}':
     parameters:
       - schema:
@@ -598,6 +586,8 @@ paths:
                       $ref: ./models/error.v1.yaml
       operationId: advertiser-findOne
       description: Get a single advertiser
+      security:
+        - API Key Param: []
     post:
       summary: Update an Advertiser
       operationId: advertiser-edit
@@ -633,6 +623,8 @@ paths:
       description: Edit a single advertiser
       tags:
         - Advertisers
+      security:
+        - API Key Param: []
     delete:
       summary: Delete an Advertiser
       operationId: advertiser-delete
@@ -667,6 +659,8 @@ paths:
       description: Delete an advertiser
       tags:
         - Advertisers
+      security:
+        - API Key Param: []
   /v2/login:
     post:
       summary: Basic Login Endpoint
@@ -1446,6 +1440,7 @@ components:
         - daily
       x-tags:
         - Caps
+      description: ''
   securitySchemes:
     API Key Param:
       name: apiKey
