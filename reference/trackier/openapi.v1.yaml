@@ -858,7 +858,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CampaignCreate'
+              $ref: '#/components/schemas/Campaign'
         description: ''
   '/v2/campaigns/{id}':
     parameters:
@@ -928,7 +928,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CampaignCreate'
+              $ref: '#/components/schemas/Campaign'
     delete:
       summary: Delete a campaign
       operationId: campaign-deleteOne
@@ -959,6 +959,148 @@ paths:
         - Campaigns
       security:
         - API Key Param: []
+  '/v2/campaigns/{id}/caps':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
+    get:
+      summary: Find Campaign Caps
+      tags:
+        - Caps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  caps:
+                    type: array
+                    items:
+                      $ref: ./models/cap.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      operationId: caps-findAll
+      description: ''
+      security:
+        - API Key Param: []
+    post:
+      summary: Create Campaign Cap
+      operationId: cap-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cap:
+                    $ref: ./models/cap.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - Caps
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cap'
+  '/v2/campaigns/{id}/caps/{capId}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
+      - schema:
+          type: string
+        name: capId
+        in: path
+        required: true
+        description: Cap ID
+    post:
+      summary: Edit a Cap
+      operationId: edit-campaign-cap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  cap:
+                    $ref: ./models/cap.v1.yaml
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ./models/cap.v1.yaml
+        description: ''
+      tags:
+        - Caps
+      description: ''
+    delete:
+      summary: Delete a Cap
+      operationId: delete-campaign-cap
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      security:
+        - API Key Param: []
+      tags:
+        - Caps
 components:
   schemas:
     UserCreate:
@@ -1067,8 +1209,8 @@ components:
       x-tags:
         - Publishers
         - Advertisers
-    CampaignCreate:
-      title: CampaignCreate
+    Campaign:
+      title: Campaign
       type: object
       x-examples:
         sample camp create:
@@ -1247,6 +1389,61 @@ components:
         - convTracking
       x-tags:
         - Campaigns
+    Cap:
+      title: Cap
+      type: object
+      x-examples:
+        example-1:
+          type: conversion
+          visibility: public
+          publisherIds:
+            - 31
+          pubCapType: each
+          daily: '10'
+          geo:
+            - ALL
+      properties:
+        type:
+          type: string
+        goalId:
+          type: string
+        publisherIds:
+          type: array
+          items:
+            type:
+              - string
+              - integer
+        visibility:
+          type: string
+          enum:
+            - public
+            - private
+        pubCapType:
+          type: string
+          enum:
+            - each
+            - group
+        landingPageIds:
+          type: array
+          items:
+            type:
+              - string
+              - integer
+        daily:
+          type: number
+        monthly:
+          type: number
+        lifetime:
+          type: number
+        geo:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+        - visibility
+        - pubCapType
+        - daily
   securitySchemes:
     API Key Param:
       name: apiKey
