@@ -12,8 +12,9 @@ servers:
 paths:
   /v2/publishers:
     get:
-      summary: Get All Publishers
-      tags: []
+      summary: Find All Publishers
+      tags:
+        - Publishers
       responses:
         '200':
           description: OK
@@ -25,7 +26,7 @@ paths:
                   publishers:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Publisher'
+                      $ref: ./models/publisher.v1.yaml
                   lastId:
                     type:
                       - number
@@ -122,6 +123,17 @@ paths:
                         id: 5
                         whitelistAdv: []
                         blockedSources: []
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
       operationId: publisher-findAll
       description: Get all publishers
       parameters:
@@ -139,6 +151,124 @@ paths:
     post:
       summary: Create a new publisher
       operationId: publisher-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publisher:
+                    $ref: ./models/publisher.v1.yaml
+              examples:
+                example-1:
+                  value:
+                    publisher:
+                      region:
+                        currency: USD
+                        zone: Asia/Kolkata
+                        lang: en
+                        address: D-96 Flat no -112 5th Floor Munirika Village
+                        city: New Delhi
+                        zipcode: '110067'
+                        country: IN
+                      meta:
+                        bank:
+                          name: ''
+                          ifsc: ''
+                          account_no: ''
+                          account_owner: ''
+                      tags:
+                        - top publisher
+                        - demo account
+                      name: test pub
+                      email: support@trackier.com
+                      country: IN
+                      currency: INR
+                      created: '2016-09-19T18:30:00.000Z'
+                      modified: '2019-12-13T05:06:32.406Z'
+                      username: '#PiedPiper'
+                      phone: '8811576958'
+                      login: '2017-10-28T06:27:06.000Z'
+                      login_attempts: 1
+                      manager_id: 5d25b773b6920d39cf195611
+                      tier_id: 594400fa17c452060005e362
+                      status: active
+                      unsubscribe: false
+                      signup_ip: 1.1.1.1
+                      company: Pied piper
+                      is_demo: false
+                      macro:
+                        source: '{aff_id}'
+                        p1: '{transaction_id}'
+                        p8: '{aff_sub8}'
+                        p9: '{aff_sub9}'
+                        p10: '{aff_sub10}'
+                      hashId: 57c6c75934243d930c8b4581
+                      id: 2
+                      whitelistAdv: []
+                      blockedSources:
+                        - hemant_testing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+              examples:
+                example-1:
+                  value:
+                    errors:
+                      - statusCode: 400
+                        code: '4002'
+                        codeMsg: ValidationError
+                        message: Please fill the required fields
+      description: Create a new publisher
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+            examples:
+              example-1:
+                value:
+                  name: hemant
+                  password: '12345566'
+                  email: sdfsdf22@g.com
+                  phone: '123456789'
+                  username: '123'
+                  company: Trackier api v2
+                  customFields:
+                    testing: '123'
+                    country: IN
+        description: Data to be sent to create a new publisher
+      tags:
+        - Publishers
+    parameters: []
+  '/v2/publishers/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Publisher ID
+    get:
+      summary: Find Publisher by ID
+      tags:
+        - Publishers
       responses:
         '200':
           description: OK
@@ -208,120 +338,7 @@ paths:
                   errors:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        statusCode:
-                          type: integer
-                        code:
-                          type: string
-                        message:
-                          type: string
-                        codeMsg:
-                          type: string
-              examples:
-                example-1:
-                  value:
-                    errors:
-                      - statusCode: 400
-                        code: '4002'
-                        codeMsg: ValidationError
-                        message: Please fill the required fields
-      description: Create a new publisher
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-api-key
-          required: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-            examples:
-              example-1:
-                value:
-                  name: hemant
-                  password: '12345566'
-                  email: sdfsdf22@g.com
-                  phone: '123456789'
-                  username: '123'
-                  company: Trackier api v2
-                  customFields:
-                    testing: '123'
-                    country: IN
-        description: Data to be sent to create a new publisher
-    parameters: []
-  '/v2/publishers/{id}':
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-        description: Publisher ID
-    get:
-      summary: Find Publisher by ID
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publisher:
-                    $ref: '#/components/schemas/Publisher'
-              examples:
-                example-1:
-                  value:
-                    publisher:
-                      region:
-                        currency: USD
-                        zone: Asia/Kolkata
-                        lang: en
-                        address: D-96 Flat no -112 5th Floor Munirika Village
-                        city: New Delhi
-                        zipcode: '110067'
-                        country: IN
-                      meta:
-                        bank:
-                          name: ''
-                          ifsc: ''
-                          account_no: ''
-                          account_owner: ''
-                      tags:
-                        - top publisher
-                        - demo account
-                      name: test pub
-                      email: support@trackier.com
-                      country: IN
-                      currency: INR
-                      created: '2016-09-19T18:30:00.000Z'
-                      modified: '2019-12-13T05:06:32.406Z'
-                      username: '#PiedPiper'
-                      phone: '8811576958'
-                      login: '2017-10-28T06:27:06.000Z'
-                      login_attempts: 1
-                      manager_id: 5d25b773b6920d39cf195611
-                      tier_id: 594400fa17c452060005e362
-                      status: active
-                      unsubscribe: false
-                      signup_ip: 1.1.1.1
-                      company: Pied piper
-                      is_demo: false
-                      macro:
-                        source: '{aff_id}'
-                        p1: '{transaction_id}'
-                        p8: '{aff_sub8}'
-                        p9: '{aff_sub9}'
-                        p10: '{aff_sub10}'
-                      hashId: 57c6c75934243d930c8b4581
-                      id: 2
-                      whitelistAdv: []
-                      blockedSources:
-                        - hemant_testing
+                      $ref: ./models/error.v1.yaml
       operationId: publisher-findAll
       description: Get a single publisher
       parameters:
@@ -350,6 +367,17 @@ paths:
                   value:
                     success: true
                     message: 'Publisher Removed!'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
       description: Delete a publisher with given ID
       parameters:
         - schema:
@@ -357,6 +385,8 @@ paths:
           in: header
           name: x-api-key
           required: true
+      tags:
+        - Publishers
     post:
       summary: Edit a publisher
       operationId: publisher-edit
@@ -369,7 +399,7 @@ paths:
                 type: object
                 properties:
                   publisher:
-                    $ref: '#/components/schemas/Publisher'
+                    $ref: ./models/publisher.v1.yaml
               examples:
                 example-1:
                   value:
@@ -427,6 +457,17 @@ paths:
                       whitelistAdv: []
                       blockedSources:
                         - hemant_testing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ''
       description: Edit a publisher
       parameters:
         - schema:
@@ -449,10 +490,13 @@ paths:
               type: object
               properties: {}
         description: Properties to be sent in request
+      tags:
+        - Publishers
   /v2/advertisers:
     get:
-      summary: Advertisers Endpoint
-      tags: []
+      summary: Find All Advertisers
+      tags:
+        - Advertisers
       responses:
         '200':
           description: OK
@@ -464,7 +508,7 @@ paths:
                   advertisers:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Advertiser'
+                      $ref: ./models/advertiser.v1.yaml
                   lastId:
                     type:
                       - 'null'
@@ -499,7 +543,8 @@ paths:
                 type: object
                 properties:
                   advertiser:
-                    $ref: '#/components/schemas/Advertiser'
+                    $ref: ./models/advertiser.v1.yaml
+              examples: {}
         '400':
           description: Bad Request
           content:
@@ -510,13 +555,15 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Error'
+                      $ref: ./models/error.v1.yaml
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserCreate'
       description: Create an advertiser
+      tags:
+        - Advertisers
   '/v2/advertisers/{id}':
     parameters:
       - schema:
@@ -526,7 +573,8 @@ paths:
         required: true
     get:
       summary: Find a single advertiser
-      tags: []
+      tags:
+        - Advertisers
       responses:
         '200':
           description: OK
@@ -536,7 +584,7 @@ paths:
                 type: object
                 properties:
                   advertiser:
-                    $ref: '#/components/schemas/Advertiser'
+                    $ref: ./models/advertiser.v1.yaml
         '400':
           description: Bad Request
           content:
@@ -547,7 +595,7 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Error'
+                      $ref: ./models/error.v1.yaml
       operationId: advertiser-findOne
       description: Get a single advertiser
     post:
@@ -562,7 +610,7 @@ paths:
                 type: object
                 properties:
                   advertiser:
-                    $ref: '#/components/schemas/Advertiser'
+                    $ref: ./models/advertiser.v1.yaml
         '400':
           description: Bad Request
           content:
@@ -573,15 +621,18 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Error'
+                      $ref: ./models/error.v1.yaml
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Advertiser'
+              $ref: '#/components/schemas/UserEdit'
             examples:
               example-1: {}
+        description: ''
       description: Edit a single advertiser
+      tags:
+        - Advertisers
     delete:
       summary: Delete an Advertiser
       operationId: advertiser-delete
@@ -607,13 +658,15 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Error'
+                      $ref: ./models/error.v1.yaml
       parameters:
         - schema:
             type: string
           in: query
           name: '{id}'
       description: Delete an advertiser
+      tags:
+        - Advertisers
   /v2/login:
     post:
       summary: Basic Login Endpoint
@@ -691,6 +744,17 @@ paths:
                         whitelistAdv: []
                         blockedSources: []
                       type: publisher
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
       description: Login endpoint
       requestBody:
         content:
@@ -714,320 +778,10 @@ paths:
                   password: xxxx
                   email: xxx@gmail.com
                   networkUrl: 'http://demo.trackier.com'
+      tags:
+        - Network
 components:
   schemas:
-    Publisher:
-      title: Publisher
-      type: object
-      x-examples:
-        sample publisher object:
-          tags:
-            - hemant
-          name: account
-          email: hemant@vnative.com
-          phone: '9999885566'
-          region:
-            currency: USD
-            lang: en
-          created: '2017-08-29T11:05:15.000Z'
-          unsubscribe: false
-          status: active
-          modified: '2019-12-13T05:06:34.030Z'
-          manager_id: 5c6e4af3b6920d6a02002f53
-          username: vNative Account
-          tier_id: 5943b5d6b6920d248f26fd37
-          login: null
-          login_attempts: null
-          signup_ip: null
-          company: vNative Account
-          is_demo: false
-          hide_camp: null
-          macro:
-            source: hemant
-            p1: test
-          hashId: 59a54a6b89d4465afb339a32
-          id: 31
-          whitelistAdv: null
-          blockedSources:
-            - hemant_testing
-            - p1
-            - p2
-          conversionsPending: null
-      description: ''
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        login:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-        currency:
-          type: string
-        region:
-          type: object
-          properties:
-            currency:
-              type: string
-            lang:
-              type: string
-            country:
-              type: string
-            address:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-            zipcode:
-              type: string
-        tags:
-          type: array
-          items:
-            type: string
-        signup_ip:
-          type:
-            - string
-            - 'null'
-          format: ipv4
-        company:
-          type: string
-        status:
-          type: string
-        meta:
-          type: object
-          properties:
-            afields:
-              type: object
-            bank:
-              type: object
-              properties:
-                name:
-                  type: string
-                ifsc:
-                  type: string
-                account_no:
-                  type: string
-                account_owner:
-                  type: string
-        hashId:
-          type: string
-        manager_id:
-          type: string
-        tier_id:
-          type: string
-        unsubscribe:
-          type: string
-        is_demo:
-          type: boolean
-        whitelistAdv:
-          type: array
-          items:
-            type: integer
-        macro:
-          type: object
-          properties:
-            p1:
-              type: string
-            p2:
-              type: string
-            p3:
-              type: string
-            p4:
-              type: string
-            p5:
-              type: string
-            p6:
-              type: string
-            p7:
-              type: string
-            p8:
-              type: string
-            p9:
-              type: string
-            p10:
-              type: string
-            source:
-              type: string
-            app_name:
-              type: string
-            app_id:
-              type: string
-            gaid:
-              type: string
-        blockedSources:
-          type: array
-          items:
-            type: string
-        conversionsPending:
-          type: integer
-        created:
-          type: string
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-        modified:
-          type: string
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-      required:
-        - id
-        - name
-        - email
-        - status
-        - hashId
-        - created
-    Advertiser:
-      title: Advertiser
-      type: object
-      x-examples:
-        sample advertiser object:
-          tags: null
-          blocked_pubs: null
-          name: Demo Advertiser
-          email: inf@vnative.com
-          currency: INR
-          meta:
-            security_token: b50346a1c529c82dac33
-          created: '1970-01-01T00:00:00.000Z'
-          modified: '2019-10-17T18:32:59.608Z'
-          username: Vnative
-          phone: '998855644'
-          region:
-            currency: USD
-            lang: en
-            country: ''
-          login: '2017-10-30T08:39:27.000Z'
-          login_attempts: null
-          signup_ip: null
-          status: active
-          company: Demo
-          unique_conv_ip: '0'
-          check_links: null
-          fallback_url: 'http://vnative.com/advertiser-fallback-url2?utm_source={publisher_id}&amp;utm_campaign={camp_id}&amp;utm_traffic={publisher_id}_{source}'
-          redirect_type: '302'
-          hashId: 57c4738434243dc57d8b456d
-          id: 3
-      properties:
-        id:
-          type: number
-        hashId:
-          type: string
-        username:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        login:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-        login_attempts:
-          type: integer
-        currency:
-          type: string
-        region:
-          type: object
-          properties:
-            currency:
-              type: string
-            lang:
-              type: string
-            country:
-              type: string
-            address:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-            zipcode:
-              type: string
-        tags:
-          type: array
-          items:
-            type: string
-        signup_ip:
-          type: string
-          format: ipv4
-        company:
-          type: string
-        status:
-          type: string
-          enum:
-            - active
-            - pending
-            - disabled
-        meta:
-          type: object
-          properties:
-            afields:
-              type: object
-            security_token:
-              type: string
-        fallbackUrl:
-          type:
-            - string
-            - 'null'
-          format: uri
-        blockedPubs:
-          type: array
-          items:
-            type: number
-        created:
-          type: string
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-        modified:
-          type: string
-          format: date-time
-          example: '2020-01-07T11:10:09.000Z'
-        redirectType:
-          type: string
-        name:
-          type: string
-      required:
-        - id
-        - hashId
-        - email
-        - created
-        - name
-    Error:
-      title: Error
-      type: object
-      x-examples:
-        error code sample:
-          statusCode: 400
-          code: '101'
-          codeMsg: API_KEY_MISSING
-          message: API Key is not found in request headers or query params
-      properties:
-        statusCode:
-          type: integer
-        code:
-          type: string
-        codeMsg:
-          type: string
-        message:
-          type: string
-      required:
-        - statusCode
-        - code
-        - codeMsg
-        - message
     UserCreate:
       title: UserCreate
       type: object
@@ -1080,6 +834,9 @@ components:
         - name
         - email
         - password
+      x-tags:
+        - Publishers
+        - Advertisers
     UserEdit:
       title: UserEdit
       type: object
@@ -1128,6 +885,9 @@ components:
               type: string
         customFields:
           type: object
+      x-tags:
+        - Publishers
+        - Advertisers
   securitySchemes:
     API Key:
       name: API Key Param
