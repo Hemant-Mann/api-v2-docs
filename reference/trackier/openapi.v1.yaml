@@ -1095,6 +1095,128 @@ paths:
         - API Key Param: []
       tags:
         - Caps
+  '/v2/campaigns/{id}/lps':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
+    get:
+      summary: FindAll landing pages
+      tags:
+        - LandingPages
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  landingPages:
+                    type: array
+                    items:
+                      $ref: ./models/landingpage.v1.yaml
+      operationId: landingpages-findAll
+      security:
+        - API Key Param: []
+    post:
+      summary: Create a Landing Page
+      operationId: landingpage-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  landingPage:
+                    $ref: ./models/landingpage.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      security:
+        - API Key Param: []
+      tags:
+        - LandingPages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+        description: ''
+  '/v2/campaigns/{id}/lps/{lpId}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: campaign id
+      - schema:
+          type: string
+        name: lpId
+        in: path
+        required: true
+        description: landing page id
+    post:
+      summary: Edit a Landing Page
+      operationId: edit-landingPage
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - LandingPages
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LandingPage'
+    delete:
+      summary: Delete a Landing Page
+      operationId: delete-landingPage
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - LandingPages
+      security:
+        - API Key Param: []
 components:
   schemas:
     UserCreate:
@@ -1440,6 +1562,36 @@ components:
         - daily
       x-tags:
         - Caps
+      description: ''
+    LandingPage:
+      title: LandingPage
+      type: object
+      x-tags:
+        - LandingPages
+      properties:
+        title:
+          type: string
+        previewLink:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - paused
+        lpType:
+          type: string
+          enum:
+            - landing
+            - prelanding
+        description:
+          type: string
+      required:
+        - title
+        - url
+        - status
+        - lpType
       description: ''
   securitySchemes:
     API Key Param:
