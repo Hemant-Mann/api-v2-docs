@@ -1,4 +1,4 @@
-title: Advertiser
+title: Advertiser Model
 type: object
 properties:
   id:

@@ -780,6 +780,185 @@ paths:
                   networkUrl: 'http://demo.trackier.com'
       tags:
         - Network
+  /v2/campaigns:
+    get:
+      summary: Get All Campaigns
+      tags:
+        - Campaigns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaigns:
+                    type: array
+                    items:
+                      $ref: ./models/campaign.v1.yaml
+                  lastId:
+                    type:
+                      - integer
+                      - 'null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      operationId: campaigns-findAll
+      description: This endpoint will return the campaigns sorted based on the id. The limit of campaigns returned in one request is 1000. Send the lastId query parameter to fetch more campaigns
+      security:
+        - API Key Param: []
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: lastId
+    post:
+      summary: Create Campaign
+      operationId: campaign-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign:
+                    $ref: ./models/campaign.v1.yaml
+                  payouts:
+                    type: array
+                    items:
+                      $ref: ./models/payout.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      security:
+        - API Key Param: []
+      tags:
+        - Campaigns
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignCreate'
+        description: ''
+  '/v2/campaigns/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign Id - numeric or hash ID
+    get:
+      summary: Find Campaign by ID
+      tags:
+        - Campaigns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign:
+                    $ref: ./models/campaign.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      operationId: campaign-findOne
+      security:
+        - API Key Param: []
+    post:
+      summary: Edit a campaign
+      operationId: campaign-updateOne
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign:
+                    $ref: ./models/campaign.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - Campaigns
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignCreate'
+    delete:
+      summary: Delete a campaign
+      operationId: campaign-deleteOne
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - Campaigns
+      security:
+        - API Key Param: []
 components:
   schemas:
     UserCreate:
@@ -888,6 +1067,186 @@ components:
       x-tags:
         - Publishers
         - Advertisers
+    CampaignCreate:
+      title: CampaignCreate
+      type: object
+      x-examples:
+        sample camp create:
+          title: API node v2 campaign create
+          previewUrl: 'http://google.com'
+          url: 'http://www.google.com/?click_id={click_id}&pub_id={publisher_id}'
+          currency: USD
+          advertiserId: '3'
+          status: active
+          convTracking: iframe_https
+          convTrackingDomain: demo.gotrackier.com
+          payouts:
+            - payout: 1.2
+              revenue: 1.5
+              currency: USD
+              geo:
+                - US
+      properties:
+        advertiserId:
+          type:
+            - string
+            - integer
+          description: Integer Id or hash ID
+        title:
+          type: string
+        description:
+          type: string
+        previewUrl:
+          type: string
+        url:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
+          default: active
+          enum:
+            - active
+            - pending
+            - paused
+            - disabled
+        commModel:
+          type: string
+          default: cpa
+          enum:
+            - cpa
+            - cpl
+            - cps
+            - cpi
+            - cpc
+            - cpm
+        device:
+          type: string
+          enum:
+            - ALL
+            - all
+            - desktop
+            - mobile
+            - tablet
+        defaultGoalName:
+          type: string
+        defaultLpName:
+          type: string
+        flow:
+          type: array
+          items:
+            type: string
+        subIdsBlocked:
+          type: array
+          items:
+            type: string
+        subIdsAllowed:
+          type: array
+          items:
+            type: string
+        appName:
+          type: string
+        appId:
+          type: string
+        os:
+          type: array
+          default: all
+          enum:
+            - all
+            - android
+            - ios
+          items:
+            type: string
+        scheduleZone:
+          type: string
+        schduleStartHour:
+          type: string
+        scheduleEndHour:
+          type: string
+        visibility:
+          type: string
+          default: public
+          enum:
+            - public
+            - private
+            - permission
+        allowSpilloverConv:
+          type: integer
+          default: 1
+          minimum: 0
+          maximum: 1
+        holdPeriod:
+          type:
+            - 'null'
+            - integer
+        cancelFallbackConv:
+          type: integer
+          minimum: 0
+          maximum: 1
+        redirectType:
+          type: string
+          default: 302
+          enum:
+            - '302'
+            - 302_hrf
+            - '200'
+            - 200_hrf
+        trackMultiConv:
+          type: integer
+          minimum: 0
+          maximum: 1
+        convPending:
+          type: integer
+          minimum: 0
+          maximum: 1
+        cancelBlockedPbConv:
+          type: integer
+          minimum: 0
+          maximum: 1
+        allowImp:
+          type: integer
+          minimum: 0
+          maximum: 1
+        iurl:
+          type: string
+        blacklistPostbackPubs:
+          type: array
+          items:
+            type: integer
+        whitelistPostbackPubs:
+          type: array
+          items:
+            type: integer
+        convTracking:
+          type: string
+          enum:
+            - postback
+            - iframe_https
+            - image_https
+        convTrackingDomain:
+          type: string
+        attributionWindow:
+          type: integer
+        fallbackCampaign:
+          type: string
+        fallbackUrl:
+          type: string
+        showGlobalTargeting:
+          type: integer
+          minimum: 0
+          maximum: 1
+        blockedPubs:
+          type: array
+          items:
+            type: integer
+        primaryTrackingDomain:
+          type: string
+      required:
+        - title
+        - url
+        - convTracking
+      x-tags:
+        - Campaigns
   securitySchemes:
     API Key Param:
       name: apiKey

@@ -1,4 +1,4 @@
-title: Error
+title: Error Model
 type: object
 properties:
   message:

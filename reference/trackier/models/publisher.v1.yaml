@@ -1,4 +1,4 @@
-title: Publisher
+title: Publisher Model
 type: object
 properties:
   id:
