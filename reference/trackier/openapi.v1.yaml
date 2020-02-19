@@ -903,6 +903,10 @@ paths:
                 properties:
                   campaign:
                     $ref: ./models/campaign.v1.yaml
+                  payouts:
+                    type: array
+                    items:
+                      $ref: ./models/payout.v1.yaml
         '400':
           description: Bad Request
           content:
