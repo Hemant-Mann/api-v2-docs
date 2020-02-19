@@ -1444,6 +1444,8 @@ components:
         - visibility
         - pubCapType
         - daily
+      x-tags:
+        - Caps
   securitySchemes:
     API Key Param:
       name: apiKey
