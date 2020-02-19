@@ -1,6 +1,8 @@
 title: Campaign Model
 type: object
 description: Campaign Model
+x-tags:
+  - Models
 properties:
   id:
     type: integer
@@ -180,11 +182,13 @@ properties:
   modified:
     type: string
     format: date-time
+  payouts:
+    type: array
+    items:
+      $ref: ./payout.v1.yaml
 required:
   - id
   - advertiserId
   - hashId
   - title
   - url
-x-tags:
-  - Models
