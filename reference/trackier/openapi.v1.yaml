@@ -889,7 +889,8 @@ components:
         - Publishers
         - Advertisers
   securitySchemes:
-    API Key:
-      name: API Key Param
+    API Key Param:
+      name: apiKey
       type: apiKey
       in: query
+      description: API Key for making the requests

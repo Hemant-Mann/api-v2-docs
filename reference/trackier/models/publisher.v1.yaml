@@ -132,7 +132,7 @@ required:
   - status
   - hashId
   - created
-description: ''
+description: Publisher Model Schema
 x-examples:
   sample publisher object:
     tags:
