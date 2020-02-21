@@ -1231,8 +1231,6 @@ paths:
         description: Campaign ID
     get:
       summary: Get Campaign Payouts
-      tags:
-        - Campaigns
       responses:
         '200':
           description: OK
@@ -1261,6 +1259,8 @@ paths:
         - API Key Param: []
       requestBody:
         description: ''
+      tags:
+        - Payouts
     post:
       summary: Add new campaign payout
       operationId: post-v2-campaigns-id-payouts
@@ -1287,14 +1287,14 @@ paths:
                       $ref: ./models/error.v1.yaml
       security:
         - API Key Param: []
-      tags:
-        - Campaigns
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Payout'
         description: ''
+      tags:
+        - Payouts
   '/v2/campaigns/{id}/payouts/{payoutId}':
     parameters:
       - schema:
@@ -1333,8 +1333,6 @@ paths:
                     type: array
                     items:
                       $ref: ./models/error.v1.yaml
-      tags:
-        - Campaigns
       security:
         - API Key Param: []
       requestBody:
@@ -1342,6 +1340,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Payout'
+      tags:
+        - Payouts
     delete:
       summary: Delete a payout
       operationId: delete-v2-campaigns-id-payouts-payoutId
@@ -1368,10 +1368,10 @@ paths:
                     type: array
                     items:
                       $ref: ./models/error.v1.yaml
-      tags:
-        - Campaigns
       security:
         - API Key Param: []
+      tags:
+        - Payouts
 components:
   schemas:
     UserCreate:
@@ -1773,8 +1773,6 @@ components:
     Payout:
       title: Payout
       type: object
-      x-tags:
-        - Campaigns
       properties:
         payout:
           type: number
@@ -1812,6 +1810,8 @@ components:
         - payout
         - revenue
         - geo
+      x-tags:
+        - Payouts
   securitySchemes:
     API Key Param:
       name: apiKey
