@@ -1372,6 +1372,129 @@ paths:
         - API Key Param: []
       tags:
         - Payouts
+  '/v2/campaigns/{id}/goals':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
+    get:
+      summary: Get Campaign Goals
+      tags:
+        - Campaign Goal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  goals:
+                    type: array
+                    items:
+                      $ref: ./models/goal.v1.yaml
+      operationId: get-v2-campaigns-id-goals
+      security:
+        - API Key Param: []
+      requestBody: {}
+    post:
+      summary: Create Campaign Goal
+      operationId: post-v2-campaigns-id-goals
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Campaign Goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+            examples: {}
+  '/v2/campaigns/{id}/goals/{goalId}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
+      - schema:
+          type: string
+        name: goalId
+        in: path
+        required: true
+        description: Goal ID
+    post:
+      summary: Edit Campaign Goal
+      operationId: post-v2-campaigns-id-goals-goalId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  goals:
+                    type: array
+                    items:
+                      $ref: ./models/goal.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - Campaign Goal
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+    delete:
+      summary: Delete a campaign goal
+      operationId: delete-v2-campaigns-id-goals-goalId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ''
+      security:
+        - API Key Param: []
+      tags:
+        - Campaign Goal
 components:
   schemas:
     UserCreate:
@@ -1812,6 +1935,51 @@ components:
         - geo
       x-tags:
         - Payouts
+      description: ''
+    Goal:
+      title: Goal
+      type: object
+      x-examples:
+        example-1:
+          title: CREATING GOAL using v2 api
+          value: apiv2_goal2
+          type: public
+          payout_model: fixed
+          payouts:
+            - payout: 2
+              revenue: 4
+              geo:
+                - IN
+      properties:
+        title:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+        payout_model:
+          type: string
+          enum:
+            - fixed
+            - percentage
+        payouts:
+          type: array
+          items:
+            type: object
+            properties:
+              payout:
+                type: number
+              revenue:
+                type: number
+              geo:
+                type: array
+                items:
+                  type: string
+      required:
+        - title
+        - value
+      x-tags:
+        - Campaign Goal
   securitySchemes:
     API Key Param:
       name: apiKey
