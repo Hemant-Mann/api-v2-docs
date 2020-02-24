@@ -1414,6 +1414,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Goal'
             examples: {}
+      security:
+        - API Key Param: []
   '/v2/campaigns/{id}/goals/{goalId}':
     parameters:
       - schema:
