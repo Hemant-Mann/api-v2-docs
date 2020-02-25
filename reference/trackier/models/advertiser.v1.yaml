@@ -1,5 +1,36 @@
 title: Advertiser Model
 type: object
+x-examples:
+  sample advertiser object:
+    tags: null
+    blocked_pubs: null
+    name: Demo Advertiser
+    email: inf@vnative.com
+    currency: INR
+    meta:
+      security_token: b50346a1c529c82dac33
+    created: '1970-01-01T00:00:00.000Z'
+    modified: '2019-10-17T18:32:59.608Z'
+    username: Vnative
+    phone: '998855644'
+    region:
+      currency: USD
+      lang: en
+      country: ''
+    login: '2017-10-30T08:39:27.000Z'
+    login_attempts: null
+    signup_ip: null
+    status: active
+    company: Demo
+    unique_conv_ip: '0'
+    check_links: null
+    fallback_url: 'http://vnative.com/advertiser-fallback-url2?utm_source={publisher_id}&amp;utm_campaign={camp_id}&amp;utm_traffic={publisher_id}_{source}'
+    redirect_type: '302'
+    hashId: 57c4738434243dc57d8b456d
+    id: 3
+x-tags:
+  - Models
+description: Advertiser Model Schema
 properties:
   id:
     type: number
@@ -37,6 +68,7 @@ properties:
       - active
       - pending
       - disabled
+      - rejected
   company:
     type: string
   signup_ip:
@@ -84,38 +116,7 @@ properties:
     type: string
 required:
   - id
-  - hashId
-  - email
-  - created
   - name
-x-examples:
-  sample advertiser object:
-    tags: null
-    blocked_pubs: null
-    name: Demo Advertiser
-    email: inf@vnative.com
-    currency: INR
-    meta:
-      security_token: b50346a1c529c82dac33
-    created: '1970-01-01T00:00:00.000Z'
-    modified: '2019-10-17T18:32:59.608Z'
-    username: Vnative
-    phone: '998855644'
-    region:
-      currency: USD
-      lang: en
-      country: ''
-    login: '2017-10-30T08:39:27.000Z'
-    login_attempts: null
-    signup_ip: null
-    status: active
-    company: Demo
-    unique_conv_ip: '0'
-    check_links: null
-    fallback_url: 'http://vnative.com/advertiser-fallback-url2?utm_source={publisher_id}&amp;utm_campaign={camp_id}&amp;utm_traffic={publisher_id}_{source}'
-    redirect_type: '302'
-    hashId: 57c4738434243dc57d8b456d
-    id: 3
-x-tags:
-  - Models
-description: Advertiser Model Schema
+  - created
+  - email
+  - hashId

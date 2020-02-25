@@ -1,5 +1,42 @@
 title: Publisher Model
 type: object
+description: Publisher Model Schema
+x-examples:
+  sample publisher object:
+    tags:
+      - hemant
+    name: account
+    email: hemant@vnative.com
+    phone: '9999885566'
+    region:
+      currency: USD
+      lang: en
+    created: '2017-08-29T11:05:15.000Z'
+    unsubscribe: false
+    status: active
+    modified: '2019-12-13T05:06:34.030Z'
+    manager_id: 5c6e4af3b6920d6a02002f53
+    username: vNative Account
+    tier_id: 5943b5d6b6920d248f26fd37
+    login: null
+    login_attempts: null
+    signup_ip: null
+    company: vNative Account
+    is_demo: false
+    hide_camp: null
+    macro:
+      source: hemant
+      p1: test
+    hashId: 59a54a6b89d4465afb339a32
+    id: 31
+    whitelistAdv: null
+    blockedSources:
+      - hemant_testing
+      - p1
+      - p2
+    conversionsPending: null
+x-tags:
+  - Models
 properties:
   id:
     type: integer
@@ -80,6 +117,11 @@ properties:
             type: string
   status:
     type: string
+    enum:
+      - active
+      - pending
+      - disabled
+      - rejected
   company:
     type: string
   signup_ip:
@@ -127,45 +169,8 @@ properties:
     type: string
 required:
   - id
-  - name
-  - email
-  - status
-  - hashId
   - created
-description: Publisher Model Schema
-x-examples:
-  sample publisher object:
-    tags:
-      - hemant
-    name: account
-    email: hemant@vnative.com
-    phone: '9999885566'
-    region:
-      currency: USD
-      lang: en
-    created: '2017-08-29T11:05:15.000Z'
-    unsubscribe: false
-    status: active
-    modified: '2019-12-13T05:06:34.030Z'
-    manager_id: 5c6e4af3b6920d6a02002f53
-    username: vNative Account
-    tier_id: 5943b5d6b6920d248f26fd37
-    login: null
-    login_attempts: null
-    signup_ip: null
-    company: vNative Account
-    is_demo: false
-    hide_camp: null
-    macro:
-      source: hemant
-      p1: test
-    hashId: 59a54a6b89d4465afb339a32
-    id: 31
-    whitelistAdv: null
-    blockedSources:
-      - hemant_testing
-      - p1
-      - p2
-    conversionsPending: null
-x-tags:
-  - Models
+  - hashId
+  - status
+  - email
+  - name
