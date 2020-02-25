@@ -47,6 +47,12 @@ properties:
       type: string
   status:
     type: string
+    enum:
+      - active
+      - pending
+      - paused
+      - disabled
+      - expired
   os:
     type: array
     items:

@@ -1652,6 +1652,7 @@ components:
             - pending
             - paused
             - disabled
+            - expired
         commModel:
           type: string
           default: cpa
