@@ -8,7 +8,7 @@ info:
     url: 'https://trackier.com/support'
     email: support@trackier.com
 servers:
-  - url: 'https://api.trackier.com/'
+  - url: 'https://api.trackier.com'
 paths:
   /v2/publishers:
     get:
@@ -31,6 +31,8 @@ paths:
                     type:
                       - number
                       - 'null'
+                required:
+                  - publishers
               examples:
                 example-1:
                   value:
@@ -271,7 +273,7 @@ paths:
                 type: object
                 properties:
                   publisher:
-                    $ref: '#/components/schemas/Publisher'
+                    $ref: ./models/publisher.v1.yaml
               examples:
                 example-1:
                   value:
@@ -332,7 +334,7 @@ paths:
                     type: array
                     items:
                       $ref: ./models/error.v1.yaml
-      operationId: publisher-findAll
+      operationId: publisher-findById
       description: Get a single publisher
       parameters: []
       security:
@@ -507,7 +509,7 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Error'
+                      $ref: ./models/error.v1.yaml
       operationId: advertiser-findAll
       description: Get 1000 advertisers in a single request then to find the next set of results pass the lastId received in the body
       parameters:
@@ -795,6 +797,8 @@ paths:
                     type:
                       - integer
                       - 'null'
+                required:
+                  - campaigns
         '400':
           description: Bad Request
           content:
@@ -852,7 +856,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Campaign'
+              type: 'null'
         description: ''
   '/v2/campaigns/{id}':
     parameters:
@@ -1920,7 +1924,7 @@ components:
         - daily
       x-tags:
         - Caps
-      description: ''
+      description: Cap Model
     LandingPage:
       title: LandingPage
       type: object
