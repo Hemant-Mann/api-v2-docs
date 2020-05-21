@@ -740,6 +740,7 @@ paths:
       summary: Find Campaign Caps
       tags:
         - Caps
+        - Campaigns
       responses:
         '200':
           description: OK
@@ -840,6 +841,7 @@ paths:
         description: ''
       tags:
         - Caps
+        - Campaigns
       description: Edit a campaign cap
     delete:
       summary: Delete a Cap
@@ -1913,3 +1915,5 @@ components:
       description: API Key for making the requests
 tags:
   - name: Publishers
+  - name: Caps
+  - name: Campaigns
