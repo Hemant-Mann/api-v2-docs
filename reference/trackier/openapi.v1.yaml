@@ -10,102 +10,6 @@ info:
 servers:
   - url: 'https://api.trackier.com'
 paths:
-  /v2/publishers:
-    get:
-      summary: Find All Publishers
-      tags:
-        - Publishers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publishers:
-                    type: array
-                    items:
-                      $ref: ./models/publisher.v1.yaml
-                  lastId:
-                    type:
-                      - number
-                      - 'null'
-                required:
-                  - publishers
-              examples: {}
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: publisher-findAll
-      description: Get all publishers
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: lastId
-          description: If lastId param is present in the request then we need to send this param in the request to get the next set of rows
-      security:
-        - API Key Param: []
-    post:
-      summary: Create a new publisher
-      operationId: publisher-create
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publisher:
-                    $ref: ./models/publisher.v1.yaml
-              examples: {}
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-              examples: {}
-      description: Create a new publisher
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-            examples:
-              example-1:
-                value:
-                  name: hemant
-                  password: '12345566'
-                  email: sdfsdf22@g.com
-                  phone: '123456789'
-                  username: '123'
-                  company: Trackier api v2
-                  customFields:
-                    testing: '123'
-                    country: IN
-        description: Data to be sent to create a new publisher
-      tags:
-        - Publishers
-      security:
-        - API Key Param: []
-    parameters: []
   '/v2/publishers/{id}':
     parameters:
       - schema:
@@ -711,7 +615,7 @@ paths:
         - API Key Param: []
       tags:
         - Campaigns
-      description: ''
+      description: Create a new campaign
       requestBody:
         content:
           application/json:
@@ -754,6 +658,7 @@ paths:
       operationId: campaign-findOne
       security:
         - API Key Param: []
+      description: Find campaign by id
     post:
       summary: Edit a campaign
       operationId: campaign-updateOne
@@ -791,6 +696,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Campaign'
+      description: Edit a campaign
     delete:
       summary: Delete a campaign
       operationId: campaign-deleteOne
@@ -821,6 +727,7 @@ paths:
         - Campaigns
       security:
         - API Key Param: []
+      description: Delete a campaign with given id
   '/v2/campaigns/{id}/caps':
     parameters:
       - schema:
@@ -857,7 +764,7 @@ paths:
                     items:
                       $ref: ./models/error.v1.yaml
       operationId: caps-findAll
-      description: ''
+      description: Find caps for campaign
       security:
         - API Key Param: []
     post:
@@ -893,6 +800,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Cap'
+      description: Create cap for a campaign
   '/v2/campaigns/{id}/caps/{capId}':
     parameters:
       - schema:
@@ -932,7 +840,7 @@ paths:
         description: ''
       tags:
         - Caps
-      description: ''
+      description: Edit a campaign cap
     delete:
       summary: Delete a Cap
       operationId: delete-campaign-cap
@@ -963,6 +871,7 @@ paths:
         - API Key Param: []
       tags:
         - Caps
+      description: Delete a campaign cap
   '/v2/campaigns/{id}/lps':
     parameters:
       - schema:
@@ -990,6 +899,7 @@ paths:
       operationId: landingpages-findAll
       security:
         - API Key Param: []
+      description: Find all landing pages for a campaign
     post:
       summary: Create a Landing Page
       operationId: landingpage-create
@@ -1024,6 +934,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LandingPage'
         description: ''
+      description: Create a landing page
   '/v2/campaigns/{id}/lps/{lpId}':
     parameters:
       - schema:
@@ -1073,6 +984,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LandingPage'
+      description: Edit a landing page
     delete:
       summary: Delete a Landing Page
       operationId: delete-landingPage
@@ -1177,6 +1089,7 @@ paths:
         description: ''
       tags:
         - Payouts
+      description: Add a new campaign payout
   '/v2/campaigns/{id}/payouts/{payoutId}':
     parameters:
       - schema:
@@ -1224,6 +1137,7 @@ paths:
               $ref: '#/components/schemas/Payout'
       tags:
         - Payouts
+      description: Edit a campaign payout
     delete:
       summary: Delete a payout
       operationId: delete-v2-campaigns-id-payouts-payoutId
@@ -1254,6 +1168,7 @@ paths:
         - API Key Param: []
       tags:
         - Payouts
+      description: Delete a campaign payout
   '/v2/campaigns/{id}/goals':
     parameters:
       - schema:
@@ -1282,6 +1197,7 @@ paths:
       security:
         - API Key Param: []
       requestBody: {}
+      description: Get goals for a campaign
     post:
       summary: Create Campaign Goal
       operationId: post-v2-campaigns-id-goals
@@ -1298,6 +1214,7 @@ paths:
             examples: {}
       security:
         - API Key Param: []
+      description: Create goal for a campaign goal
   '/v2/campaigns/{id}/goals/{goalId}':
     parameters:
       - schema:
@@ -1349,6 +1266,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Goal'
+      description: Edit campaign goal
     delete:
       summary: Delete a campaign goal
       operationId: delete-v2-campaigns-id-goals-goalId
@@ -1379,6 +1297,7 @@ paths:
         - API Key Param: []
       tags:
         - Campaign Goal
+      description: Delete a campaign goal
   /v2/campaigns/status:
     post:
       summary: Bulk Campaign Status Change
@@ -1432,12 +1351,82 @@ paths:
               required:
                 - campaignIds
                 - status
+  /v2/publishers:
+    get:
+      summary: Find all publishers
+      tags:
+        - Publishers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishers:
+                    type: array
+                    items:
+                      $ref: ./models/publisher.v1.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      operationId: get-v2-publishers
+      description: Find all publishers
+    post:
+      summary: Create a new publisher
+      operationId: post-v2-publishers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  publisher:
+                    $ref: ./models/publisher.v1.yaml
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: ./models/error.v1.yaml
+      tags:
+        - Publishers
+      description: Create a new publisher
+      security:
+        - API Key Param: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        description: schema to create a publisher
 components:
   schemas:
     UserCreate:
       title: UserCreate
       type: object
-      description: ''
+      description: Schema to create a publisher or advertiser
       x-examples:
         user create sample:
           name: Hemant
@@ -1542,6 +1531,7 @@ components:
               type: string
         customFields:
           type: object
+      description: Schema to edit a publisher or advertiser
     Campaign:
       title: Campaign
       type: object
@@ -1563,6 +1553,7 @@ components:
                 - US
       x-tags:
         - Campaigns
+      description: ''
       properties:
         advertiserId:
           type:
@@ -1600,12 +1591,6 @@ components:
             - cpm
         device:
           type: string
-          enum:
-            - ALL
-            - all
-            - desktop
-            - mobile
-            - tablet
         defaultGoalName:
           type: string
         defaultLpName:
@@ -1628,13 +1613,12 @@ components:
           type: string
         os:
           type: array
-          default: all
-          enum:
-            - all
-            - android
-            - ios
           items:
             type: string
+            enum:
+              - android
+              - ios
+              - all
         scheduleZone:
           type: string
         schduleStartHour:
@@ -1802,7 +1786,7 @@ components:
         - daily
       x-tags:
         - Caps
-      description: Cap Model
+      description: Cap Model to create/edit cap
     LandingPage:
       title: LandingPage
       type: object
@@ -1920,9 +1904,12 @@ components:
         - value
       x-tags:
         - Campaign Goal
+      description: Goal Model to create/edit goal
   securitySchemes:
     API Key Param:
       name: apiKey
       type: apiKey
       in: query
       description: API Key for making the requests
+tags:
+  - name: Publishers
