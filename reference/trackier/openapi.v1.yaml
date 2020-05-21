@@ -1017,6 +1017,7 @@ paths:
         - LandingPages
       security:
         - API Key Param: []
+      description: Delete a landing page
   '/v2/campaigns/{id}/payouts':
     parameters:
       - schema:
@@ -1057,6 +1058,7 @@ paths:
         description: ''
       tags:
         - Payouts
+      description: Get campaign payouts
     post:
       summary: Add new campaign payout
       operationId: post-v2-campaigns-id-payouts
