@@ -33,98 +33,7 @@ paths:
                       - 'null'
                 required:
                   - publishers
-              examples:
-                example-1:
-                  value:
-                    publishers:
-                      - region:
-                          currency: USD
-                          zone: Asia/Kolkata
-                          lang: en
-                          address: D-96 Flat no -112 5th Floor Munirika Village
-                          city: New Delhi
-                          zipcode: '110067'
-                          country: IN
-                        meta:
-                          bank:
-                            name: ''
-                            ifsc: ''
-                            account_no: ''
-                            account_owner: ''
-                          payout:
-                            paypal: ''
-                            payquicker: ''
-                            payoneer: ''
-                            paytm: alb_magji@hotmail.uk
-                            mobicash: ''
-                            easypaisa: ''
-                          tdomain: []
-                        tags:
-                          - top publisher
-                          - demo account
-                        name: Pied Piper
-                        email: subhomoy@trackier.com
-                        country: IN
-                        currency: INR
-                        created: '2016-09-19T18:30:00.000Z'
-                        modified: '2019-12-13T05:06:32.406Z'
-                        username: '#PiedPiper'
-                        phone: '8811576958'
-                        login: '2017-10-28T06:27:06.000Z'
-                        login_attempts: 1
-                        manager_id: 5d25b773b6920d39cf195611
-                        tier_id: 594400fa17c452060005e362
-                        status: active
-                        unsubscribe: false
-                        signup_ip: 1.1.1.1
-                        company: Pied piper
-                        is_demo: false
-                        macro:
-                          source: '{aff_id}'
-                          p1: '{transaction_id}'
-                          p8: '{aff_sub8}'
-                          p9: '{aff_sub9}'
-                          p10: '{aff_sub10}'
-                        hashId: 57c6c75934243d930c8b4581
-                        id: 2
-                        whitelistAdv: []
-                        blockedSources:
-                          - hemant_testing
-                      - region:
-                          currency: USD
-                          zone: Asia/Kolkata
-                          lang: en
-                        meta:
-                          payout:
-                            paypal: ''
-                            payquicker: ''
-                            payoneer: ''
-                            paytm: ''
-                            mobicash: ''
-                            easypaisa: ''
-                        tags: []
-                        name: test pub
-                        email: sales@s2ssoftsys.in
-                        country: IN
-                        currency: INR
-                        created: '2016-09-21T00:00:00.000Z'
-                        modified: '2019-12-13T05:06:32.481Z'
-                        username: test pub
-                        phone: null
-                        login: null
-                        manager_id: 5d78cae3b6920d28be58cc1a
-                        login_attempts: null
-                        tier_id: null
-                        status: deleted
-                        unsubscribe: false
-                        is_demo: false
-                        macro:
-                          p1: '{your-transaction-id}'
-                          source: '{your-sub-aff-id}'
-                        hashId: 57e262141d41c81f2b04b8d0
-                        id: 5
-                        whitelistAdv: []
-                        blockedSources: []
+              examples: {}
         '400':
           description: Bad Request
           content:
@@ -159,55 +68,7 @@ paths:
                 properties:
                   publisher:
                     $ref: ./models/publisher.v1.yaml
-              examples:
-                example-1:
-                  value:
-                    publisher:
-                      region:
-                        currency: USD
-                        zone: Asia/Kolkata
-                        lang: en
-                        address: D-96 Flat no -112 5th Floor Munirika Village
-                        city: New Delhi
-                        zipcode: '110067'
-                        country: IN
-                      meta:
-                        bank:
-                          name: ''
-                          ifsc: ''
-                          account_no: ''
-                          account_owner: ''
-                      tags:
-                        - top publisher
-                        - demo account
-                      name: test pub
-                      email: support@trackier.com
-                      country: IN
-                      currency: INR
-                      created: '2016-09-19T18:30:00.000Z'
-                      modified: '2019-12-13T05:06:32.406Z'
-                      username: '#PiedPiper'
-                      phone: '8811576958'
-                      login: '2017-10-28T06:27:06.000Z'
-                      login_attempts: 1
-                      manager_id: 5d25b773b6920d39cf195611
-                      tier_id: 594400fa17c452060005e362
-                      status: active
-                      unsubscribe: false
-                      signup_ip: 1.1.1.1
-                      company: Pied piper
-                      is_demo: false
-                      macro:
-                        source: '{aff_id}'
-                        p1: '{transaction_id}'
-                        p8: '{aff_sub8}'
-                        p9: '{aff_sub9}'
-                        p10: '{aff_sub10}'
-                      hashId: 57c6c75934243d930c8b4581
-                      id: 2
-                      whitelistAdv: []
-                      blockedSources:
-                        - hemant_testing
+              examples: {}
         '400':
           description: Bad Request
           content:
@@ -219,14 +80,7 @@ paths:
                     type: array
                     items:
                       $ref: ./models/error.v1.yaml
-              examples:
-                example-1:
-                  value:
-                    errors:
-                      - statusCode: 400
-                        code: '4002'
-                        codeMsg: ValidationError
-                        message: Please fill the required fields
+              examples: {}
       description: Create a new publisher
       parameters: []
       requestBody:
@@ -1184,6 +1038,15 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  landingPage:
+                    $ref: ./models/landingpage.v1.yaml
         '400':
           description: Bad Request
           content:
@@ -1210,6 +1073,15 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
         '400':
           description: Bad Request
           content:
