@@ -403,6 +403,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        description: ''
       description: Create an advertiser
       tags:
         - Advertisers
@@ -473,8 +477,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserEdit'
-            examples:
-              example-1: {}
+            examples: {}
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserEdit'
         description: ''
       description: Edit a single advertiser
       tags:
