@@ -1,1921 +1,479 @@
 openapi: 3.0.0
 info:
-  title: Trackier API v2
-  version: '1.0'
-  description: Trackier v2 API
+  title: Trackier API Documentation
+  description: >
+    # Introduction
+
+    The Trackier API is designed for developers, engineers, or anyone else whoâs
+    comfortable creating custom-coded solutions or integrating with RESTful APIs.
+
+    # Authorization
+
+    Some endpoints do not require any authentication, pretty much anything else
+    will require you to be authenticated.
+    <br>To become authenticated you will need to create an API Key from the web panel.
+    <br>Once you have your API Key you can pass it in the header like this:
+
+    # Base Url
+      <li>Url : https://api.trackier.com/v2</li>
+      <li>Description : Main server</li>
+
+    # HTTP Status Code
+
+    Review all global errors for the vNative API so you can get back to work fast.
+    <hr><b>401 - API Key Invalid</b>
+    <br>Your API key may be invalid, or youâve
+    attempted to access the wrong data center.
+    <br>The current request requires user authentication.
+    For example, the user does not have the necessary credentials.
+    <hr><b>403 - No permissions visit this resource</b>
+    <br>You are not permitted to access this resource.
+    <br>The request was a valid request, but the server is refusing to respond to it.
+    For example, the user does not have the necessary permissions for the resource.
+    <hr><b>404 - Resource Not Found</b>
+    <br>The requested resource could not be found.
+    <br>This error tells you a specific resource doesnât exist.
+    Itâs possible that the resource has been moved or deleted, or that thereâs a typo
+    in your request.<hr><b>500 - Server error, Please contact your administrator</b>
+    <br>A generic error message, given when an unexpected condition was encountered and
+    no more specific message is suitable.Please contact Support for more information.
+    <br>This error lets you know our servers have experienced a problem.
+    Although this is rare, please contact support@trackier.com to let us know that
+    youâve encountered this error.<hr><b>501 - Resource URI not found</b>
+    <br>The requested uri resource could not be found.\n\nThe server either does
+    not recognize the request method, or it lacks the ability to fulfill the request."
+
+    # Authentication
+
+    vNative offers authentication via Header:
+      - API Key
+
+  version: 2.0
+  termsOfService: 'https://trackier.com/terms-of-service/'
   contact:
-    name: Support
-    url: 'https://trackier.com/support'
+    name: API Support
     email: support@trackier.com
+  x-logo:
+    url: 'https://trackier.com/blog/wp-content/uploads/2019/02/dark-logo.png'
+
 servers:
-  - url: 'https://api.trackier.com'
+  - url: https://api.trackier.com/v2
+    description: 'Base Url: https://api.trackier.com/v2'
+
+tags:
+  - name: Campaign
+    description: '
+    <h4>GET the next page of results</h4>
+    You can then make a call to any page by just page number <code>?page={5}</code>. The page parameter in the next link is 5, so the results will show campagians of  page 5.
+    The call will be as follows:
+    <br/>eg. <code>/publisher/campaigns?limit={limit}&page={5}</code>
+    <br/>
+    <br/>
+    <h4>How do I know if there are more pages?</h4>
+    When the response doesnât contain a campaign data in results, you know that youâve reached the end.
+    '
+
+x-tagGroups:
+  - name: Publisher
+    tags:
+      - Campaign
+
 paths:
-  '/v2/publishers/{id}':
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-        description: Publisher ID
+  '/publisher/campaigns':
     get:
-      summary: Find Publisher by ID
       tags:
-        - Publishers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publisher:
-                    $ref: ./models/publisher.v1.yaml
-              examples:
-                example-1:
-                  value:
-                    publisher:
-                      region:
-                        currency: USD
-                        zone: Asia/Kolkata
-                        lang: en
-                        address: D-96 Flat no -112 5th Floor Munirika Village
-                        city: New Delhi
-                        zipcode: '110067'
-                        country: IN
-                      meta:
-                        bank:
-                          name: ''
-                          ifsc: ''
-                          account_no: ''
-                          account_owner: ''
-                      tags:
-                        - top publisher
-                        - demo account
-                      name: test pub
-                      email: support@trackier.com
-                      country: IN
-                      currency: INR
-                      created: '2016-09-19T18:30:00.000Z'
-                      modified: '2019-12-13T05:06:32.406Z'
-                      username: '#PiedPiper'
-                      phone: '8811576958'
-                      login: '2017-10-28T06:27:06.000Z'
-                      login_attempts: 1
-                      manager_id: 5d25b773b6920d39cf195611
-                      tier_id: 594400fa17c452060005e362
-                      status: active
-                      unsubscribe: false
-                      signup_ip: 1.1.1.1
-                      company: Pied piper
-                      is_demo: false
-                      macro:
-                        source: '{aff_id}'
-                        p1: '{transaction_id}'
-                        p8: '{aff_sub8}'
-                        p9: '{aff_sub9}'
-                        p10: '{aff_sub10}'
-                      hashId: 57c6c75934243d930c8b4581
-                      id: 2
-                      whitelistAdv: []
-                      blockedSources:
-                        - hemant_testing
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: publisher-findById
-      description: Get a single publisher
-      parameters: []
-      security:
-        - API Key Param: []
-    delete:
-      summary: Delete a publisher
-      operationId: publisher-delete
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-              examples:
-                example-1:
-                  value:
-                    success: true
-                    message: 'Publisher Removed!'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      description: Delete a publisher with given ID
-      parameters: []
-      tags:
-        - Publishers
-      security:
-        - API Key Param: []
-    post:
-      summary: Edit a publisher
-      operationId: publisher-edit
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publisher:
-                    $ref: ./models/publisher.v1.yaml
-              examples:
-                example-1:
-                  value:
-                    publisher:
-                      region:
-                        currency: USD
-                        zone: Asia/Kolkata
-                        lang: en
-                        address: D-96 Flat no -112 5th Floor Munirika Village
-                        city: New Delhi
-                        zipcode: '110067'
-                        country: IN
-                      meta:
-                        bank:
-                          name: ''
-                          ifsc: ''
-                          account_no: ''
-                          account_owner: ''
-                        payout:
-                          paypal: ''
-                          payquicker: ''
-                          payoneer: ''
-                          paytm: alb_magji@hotmail.uk
-                          mobicash: ''
-                          easypaisa: ''
-                        tdomain: []
-                      tags:
-                        - top publisher
-                        - demo account
-                      name: Pied Piper
-                      email: subhomoy@trackier.com
-                      country: IN
-                      currency: INR
-                      created: '2016-09-19T18:30:00.000Z'
-                      modified: '2019-12-13T05:06:32.406Z'
-                      username: '#PiedPiper'
-                      phone: '8811576958'
-                      login: '2017-10-28T06:27:06.000Z'
-                      login_attempts: 1
-                      manager_id: 5d25b773b6920d39cf195611
-                      tier_id: 594400fa17c452060005e362
-                      status: active
-                      unsubscribe: false
-                      signup_ip: 1.1.1.1
-                      company: Pied piper
-                      is_demo: false
-                      macro:
-                        source: '{aff_id}'
-                        p1: '{transaction_id}'
-                        p8: '{aff_sub8}'
-                        p9: '{aff_sub9}'
-                        p10: '{aff_sub10}'
-                      hashId: 57c6c75934243d930c8b4581
-                      id: 2
-                      whitelistAdv: []
-                      blockedSources:
-                        - hemant_testing
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ''
-      description: Edit a publisher
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserEdit'
-            examples:
-              example-1:
-                value:
-                  name: himanshu4
-                  status: active
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-        description: Properties to be sent in request
-      tags:
-        - Publishers
-      security:
-        - API Key Param: []
-  /v2/advertisers:
-    get:
-      summary: Find All Advertisers
-      tags:
-        - Advertisers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  advertisers:
-                    type: array
-                    items:
-                      $ref: ./models/advertiser.v1.yaml
-                  lastId:
-                    type:
-                      - 'null'
-                      - integer
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: advertiser-findAll
-      description: Get 1000 advertisers in a single request then to find the next set of results pass the lastId received in the body
+        - Campaign
+      summary: Fetch All Campaigns
+      description: Returns all publisher campaigns
+      operationId: campaigns
       parameters:
-        - schema:
-            type: string
-          in: query
-          name: lastId
-      security:
-        - API Key Param: []
-    post:
-      summary: Create an advertiser
-      operationId: advertiser-create
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  advertiser:
-                    $ref: ./models/advertiser.v1.yaml
-              examples: {}
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-        description: ''
-      description: Create an advertiser
-      tags:
-        - Advertisers
-      security:
-        - API Key Param: []
-  '/v2/advertisers/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Find a single advertiser
-      tags:
-        - Advertisers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  advertiser:
-                    $ref: ./models/advertiser.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: advertiser-findOne
-      description: Get a single advertiser
-      security:
-        - API Key Param: []
-    post:
-      summary: Update an Advertiser
-      operationId: advertiser-edit
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  advertiser:
-                    $ref: ./models/advertiser.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserEdit'
-            examples: {}
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/UserEdit'
-        description: ''
-      description: Edit a single advertiser
-      tags:
-        - Advertisers
-      security:
-        - API Key Param: []
-    delete:
-      summary: Delete an Advertiser
-      operationId: advertiser-delete
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: '{id}'
-      description: Delete an advertiser
-      tags:
-        - Advertisers
-      security:
-        - API Key Param: []
-  /v2/login:
-    post:
-      summary: Basic Login Endpoint
-      operationId: login
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      key:
-                        type: string
-                      user:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          hashId:
-                            type: string
-                          name:
-                            type: string
-                          email:
-                            type: string
-                          username:
-                            type: string
-                          company:
-                            type: string
-                          created:
-                            type: string
-                          modified:
-                            type: string
-                      type:
-                        type: string
-                  success:
-                    type: boolean
-              examples:
-                sample example:
-                  value:
-                    success: true
-                    data:
-                      key: xxxxxxxxxxxxxxxxxxxx
-                      user:
-                        meta:
-                          afields:
-                            testing: ''
-                            country: IN
-                        tags: []
-                        username: Himanshu Tiwari
-                        name: Himanshu Tiwari
-                        email: mastionmind@gmail.com
-                        region:
-                          currency: INR
-                          lang: en
-                          country: IN
-                          address: ''
-                          state: ''
-                          city: ''
-                          zipcode: ''
-                        unsubscribe: false
-                        is_demo: false
-                        macro:
-                          p1: '{your-transaction-id}'
-                          source: '{your-sub-aff-id}'
-                        status: active
-                        created: '2020-01-07T11:10:09.000Z'
-                        modified: '2020-02-17T11:09:54.243Z'
-                        company: Himanshu Tiwari
-                        hashId: 5e146711b6920d697c4326dc
-                        id: 1302
-                        whitelistAdv: []
-                        blockedSources: []
-                      type: publisher
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      description: Login endpoint
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-                networkUrl:
-                  type: string
-              required:
-                - email
-                - password
-                - networkUrl
-            examples:
-              basic login example:
-                value:
-                  password: xxxx
-                  email: xxx@gmail.com
-                  networkUrl: 'http://demo.trackier.com'
-      tags:
-        - Network
-  /v2/campaigns:
-    get:
-      summary: Get All Campaigns
-      tags:
-        - Campaigns
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  campaigns:
-                    type: array
-                    items:
-                      $ref: ./models/campaign.v1.yaml
-                  lastId:
-                    type:
-                      - integer
-                      - 'null'
-                required:
-                  - campaigns
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: campaigns-findAll
-      description: This endpoint will return the campaigns sorted based on the id. The limit of campaigns returned in one request is 1000. Send the lastId query parameter to fetch more campaigns
-      security:
-        - API Key Param: []
-      parameters:
-        - schema:
+        - in: query
+          name: page
+          description: Page number result to fetch
+          schema:
             type: integer
-          in: query
-          name: lastId
-    post:
-      summary: Create Campaign
-      operationId: campaign-create
+        - in: query
+          name: limit
+          description: Number of result to fetch in one call
+          schema:
+            type: integer
+        - in: query
+          name: apiKey
+          description: Publisher API Key
+          schema:
+            type: string
       responses:
         '200':
-          description: OK
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  campaign:
-                    $ref: ./models/campaign.v1.yaml
-                  payouts:
-                    type: array
-                    items:
-                      $ref: ./models/payout.v1.yaml
+                $ref: '#/components/schemas/PublisherCampaignData'
         '400':
-          description: Bad Request
+          description: Invalid API Key
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      tags:
-        - Campaigns
-      description: Create a new campaign
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: 'null'
-        description: ''
-  '/v2/campaigns/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign Id - numeric or hash ID
-    get:
-      summary: Find Campaign by ID
-      tags:
-        - Campaigns
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  campaign:
-                    $ref: ./models/campaign.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: campaign-findOne
-      security:
-        - API Key Param: []
-      description: Find campaign by id
-    post:
-      summary: Edit a campaign
-      operationId: campaign-updateOne
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  campaign:
-                    $ref: ./models/campaign.v1.yaml
-                  payouts:
-                    type: array
-                    items:
-                      $ref: ./models/payout.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - Campaigns
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Campaign'
-      description: Edit a campaign
-    delete:
-      summary: Delete a campaign
-      operationId: campaign-deleteOne
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  success:
-                    type: boolean
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - Campaigns
-      security:
-        - API Key Param: []
-      description: Delete a campaign with given id
-  '/v2/campaigns/{id}/caps':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-    get:
-      summary: Find Campaign Caps
-      tags:
-        - Caps
-        - Campaigns
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  caps:
-                    type: array
-                    items:
-                      $ref: ./models/cap.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: caps-findAll
-      description: Find caps for campaign
-      security:
-        - API Key Param: []
-    post:
-      summary: Create Campaign Cap
-      operationId: cap-create
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  cap:
-                    $ref: ./models/cap.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - Caps
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Cap'
-      description: Create cap for a campaign
-  '/v2/campaigns/{id}/caps/{capId}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-      - schema:
-          type: string
-        name: capId
-        in: path
-        required: true
-        description: Cap ID
-    post:
-      summary: Edit a Cap
-      operationId: edit-campaign-cap
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  cap:
-                    $ref: ./models/cap.v1.yaml
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: ./models/cap.v1.yaml
-        description: ''
-      tags:
-        - Caps
-        - Campaigns
-      description: Edit a campaign cap
-    delete:
-      summary: Delete a Cap
-      operationId: delete-campaign-cap
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      tags:
-        - Caps
-      description: Delete a campaign cap
-  '/v2/campaigns/{id}/lps':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-    get:
-      summary: FindAll landing pages
-      tags:
-        - LandingPages
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  landingPages:
-                    type: array
-                    items:
-                      $ref: ./models/landingpage.v1.yaml
-      operationId: landingpages-findAll
-      security:
-        - API Key Param: []
-      description: Find all landing pages for a campaign
-    post:
-      summary: Create a Landing Page
-      operationId: landingpage-create
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  landingPage:
-                    $ref: ./models/landingpage.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      tags:
-        - LandingPages
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LandingPage'
-        description: ''
-      description: Create a landing page
-  '/v2/campaigns/{id}/lps/{lpId}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: campaign id
-      - schema:
-          type: string
-        name: lpId
-        in: path
-        required: true
-        description: landing page id
-    post:
-      summary: Edit a Landing Page
-      operationId: edit-landingPage
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  landingPage:
-                    $ref: ./models/landingpage.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - LandingPages
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LandingPage'
-      description: Edit a landing page
-    delete:
-      summary: Delete a Landing Page
-      operationId: delete-landingPage
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - LandingPages
-      security:
-        - API Key Param: []
-      description: Delete a landing page
-  '/v2/campaigns/{id}/payouts':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-    get:
-      summary: Get Campaign Payouts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payouts:
-                    type: array
-                    items:
-                      $ref: ./models/payout.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: get-v2-campaigns-id-payouts
-      security:
-        - API Key Param: []
-      requestBody:
-        description: ''
-      tags:
-        - Payouts
-      description: Get campaign payouts
-    post:
-      summary: Add new campaign payout
-      operationId: post-v2-campaigns-id-payouts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payout:
-                    $ref: ./models/payout.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Payout'
-        description: ''
-      tags:
-        - Payouts
-      description: Add a new campaign payout
-  '/v2/campaigns/{id}/payouts/{payoutId}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-      - schema:
-          type: string
-        name: payoutId
-        in: path
-        required: true
-        description: Payout ID
-    post:
-      summary: Edit a payout
-      operationId: post-v2-campaigns-id-payouts-payoutId
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payout:
-                    $ref: ./models/payout.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Payout'
-      tags:
-        - Payouts
-      description: Edit a campaign payout
-    delete:
-      summary: Delete a payout
-      operationId: delete-v2-campaigns-id-payouts-payoutId
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      security:
-        - API Key Param: []
-      tags:
-        - Payouts
-      description: Delete a campaign payout
-  '/v2/campaigns/{id}/goals':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-    get:
-      summary: Get Campaign Goals
-      tags:
-        - Campaign Goal
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  goals:
-                    type: array
-                    items:
-                      $ref: ./models/goal.v1.yaml
-      operationId: get-v2-campaigns-id-goals
-      security:
-        - API Key Param: []
-      requestBody: {}
-      description: Get goals for a campaign
-    post:
-      summary: Create Campaign Goal
-      operationId: post-v2-campaigns-id-goals
-      responses:
-        '200':
-          description: OK
-      tags:
-        - Campaign Goal
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Goal'
-            examples: {}
-      security:
-        - API Key Param: []
-      description: Create goal for a campaign goal
-  '/v2/campaigns/{id}/goals/{goalId}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: Campaign ID
-      - schema:
-          type: string
-        name: goalId
-        in: path
-        required: true
-        description: Goal ID
-    post:
-      summary: Edit Campaign Goal
-      operationId: post-v2-campaigns-id-goals-goalId
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  goals:
-                    type: array
-                    items:
-                      $ref: ./models/goal.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - Campaign Goal
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Goal'
-      description: Edit campaign goal
-    delete:
-      summary: Delete a campaign goal
-      operationId: delete-v2-campaigns-id-goals-goalId
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ''
-      security:
-        - API Key Param: []
-      tags:
-        - Campaign Goal
-      description: Delete a campaign goal
-  /v2/campaigns/status:
-    post:
-      summary: Bulk Campaign Status Change
-      operationId: post-v2-campaigns-status
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    $ref: ./models/error.v1.yaml
-      tags:
-        - Campaigns
-      description: Use this endpoint to change the status of multiple campaigns in one request
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                campaignIds:
-                  type: array
-                  items:
-                    type:
-                      - string
-                      - integer
-                status:
-                  type: string
-                  enum:
-                    - active
-                    - pending
-                    - paused
-                    - disabled
-                    - expired
-              required:
-                - campaignIds
-                - status
-  /v2/publishers:
-    get:
-      summary: Find all publishers
-      tags:
-        - Publishers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  publishers:
-                    type: array
-                    items:
-                      $ref: ./models/publisher.v1.yaml
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      operationId: get-v2-publishers
-      description: Find all publishers
-    post:
-      summary: Create a new publisher
-      operationId: post-v2-publishers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  publisher:
-                    $ref: ./models/publisher.v1.yaml
-          headers: {}
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      $ref: ./models/error.v1.yaml
-      tags:
-        - Publishers
-      description: Create a new publisher
-      security:
-        - API Key Param: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-        description: schema to create a publisher
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
-    UserCreate:
-      title: UserCreate
+    ApiResponse:
       type: object
-      description: Schema to create a publisher or advertiser
-      x-examples:
-        user create sample:
-          name: Hemant
-          email: hemant@gmail.com
-          password: '12345678'
-      x-tags:
-        - Publishers
-        - Advertisers
       properties:
-        username:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-        company:
-          type: string
-        phone:
-          type: string
-        country:
-          type: string
-        status:
-          type: string
-          enum:
-            - active
-            - pending
-            - disabled
-            - rejected
-        region:
-          type: object
-          properties:
-            lang:
-              type: string
-            currency:
-              type: string
-            address:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-            zipcode:
-              type: string
-        customFields:
-          type: object
-      required:
-        - name
-        - email
-        - password
-    UserEdit:
-      title: UserEdit
-      type: object
-      x-examples:
-        user edit example:
-          name: Hemant
-          status: pending
-      x-tags:
-        - Publishers
-        - Advertisers
-      properties:
-        username:
-          type: string
-        name:
-          type: string
-        password:
-          type: string
-        email:
-          type: string
-          format: email
-        company:
-          type: string
-        phone:
-          type: string
-        country:
-          type: string
-        status:
-          type: string
-          enum:
-            - active
-            - pending
-            - disabled
-            - rejected
-        region:
-          type: object
-          properties:
-            lang:
-              type: string
-            currency:
-              type: string
-            country:
-              type: string
-            address:
-              type: string
-            state:
-              type: string
-            city:
-              type: string
-            zipcode:
-              type: string
-        customFields:
-          type: object
-      description: Schema to edit a publisher or advertiser
-    Campaign:
-      title: Campaign
-      type: object
-      x-examples:
-        sample camp create:
-          title: API node v2 campaign create
-          previewUrl: 'http://google.com'
-          url: 'http://www.google.com/?click_id={click_id}&pub_id={publisher_id}'
-          currency: USD
-          advertiserId: '3'
-          status: active
-          convTracking: iframe_https
-          convTrackingDomain: demo.gotrackier.com
-          payouts:
-            - payout: 1.2
-              revenue: 1.5
-              currency: USD
-              geo:
-                - US
-      x-tags:
-        - Campaigns
-      description: ''
-      properties:
-        advertiserId:
-          type:
-            - string
-            - integer
-          description: Integer Id or hash ID
-        title:
-          type: string
-        description:
-          type: string
-        previewUrl:
-          type: string
-        url:
-          type: string
-        currency:
-          type: string
-        status:
-          type: string
-          default: active
-          enum:
-            - active
-            - pending
-            - paused
-            - disabled
-            - expired
-        commModel:
-          type: string
-          default: cpa
-          enum:
-            - cpa
-            - cpl
-            - cps
-            - cpi
-            - cpc
-            - cpm
-        device:
-          type: string
-        defaultGoalName:
-          type: string
-        defaultLpName:
-          type: string
-        flow:
-          type: array
-          items:
-            type: string
-        subIdsBlocked:
-          type: array
-          items:
-            type: string
-        subIdsAllowed:
-          type: array
-          items:
-            type: string
-        appName:
-          type: string
-        appId:
-          type: string
-        os:
-          type: array
-          items:
-            type: string
-            enum:
-              - android
-              - ios
-              - all
-        scheduleZone:
-          type: string
-        schduleStartHour:
-          type: string
-        scheduleEndHour:
-          type: string
-        visibility:
-          type: string
-          default: public
-          enum:
-            - public
-            - private
-            - permission
-        allowSpilloverConv:
+        code:
           type: integer
-          default: 1
-          minimum: 0
-          maximum: 1
-        holdPeriod:
-          type:
-            - 'null'
-            - integer
-        cancelFallbackConv:
-          type: integer
-          minimum: 0
-          maximum: 1
-        redirectType:
-          type: string
-          default: 302
-          enum:
-            - '302'
-            - 302_hrf
-            - '200'
-            - 200_hrf
-        trackMultiConv:
-          type: integer
-          minimum: 0
-          maximum: 1
-        convPending:
-          type: integer
-          minimum: 0
-          maximum: 1
-        cancelBlockedPbConv:
-          type: integer
-          minimum: 0
-          maximum: 1
-        allowImp:
-          type: integer
-          minimum: 0
-          maximum: 1
-        iurl:
-          type: string
-        blacklistPostbackPubs:
-          type: array
-          items:
-            type: integer
-        whitelistPostbackPubs:
-          type: array
-          items:
-            type: integer
-        convTracking:
-          type: string
-          enum:
-            - postback
-            - iframe_https
-            - image_https
-        convTrackingDomain:
-          type: string
-        attributionWindow:
-          type: integer
-        fallbackCampaign:
-          type: string
-        fallbackUrl:
-          type: string
-        showGlobalTargeting:
-          type: integer
-          minimum: 0
-          maximum: 1
-        blockedPubs:
-          type: array
-          items:
-            type: integer
-        primaryTrackingDomain:
-          type: string
-        payouts:
-          type: array
-          items:
-            type: object
-            properties:
-              payout:
-                type: number
-              revenue:
-                type:
-                  - string
-                  - number
-              geo:
-                type: array
-                items:
-                  type: string
-            required:
-              - payout
-              - revenue
-              - geo
-      required:
-        - advertiserId
-        - title
-        - url
-        - currency
-        - convTracking
-        - payouts
-    Cap:
-      title: Cap
-      type: object
-      x-examples:
-        example-1:
-          type: conversion
-          visibility: public
-          publisherIds:
-            - 31
-          pubCapType: each
-          daily: '10'
-          geo:
-            - ALL
-      properties:
+          format: int32
         type:
           type: string
-        goalId:
+        message:
           type: string
-        publisherIds:
-          type: array
-          items:
-            type:
-              - string
-              - integer
-        visibility:
-          type: string
-          enum:
-            - public
-            - private
-        pubCapType:
-          type: string
-          enum:
-            - each
-            - group
-        landingPageIds:
-          type: array
-          items:
-            type:
-              - string
-              - integer
-        daily:
-          type: number
-        monthly:
-          type: number
-        lifetime:
-          type: number
-        geo:
-          type: array
-          items:
-            type: string
-      required:
-        - type
-        - visibility
-        - pubCapType
-        - daily
-      x-tags:
-        - Caps
-      description: Cap Model to create/edit cap
-    LandingPage:
-      title: LandingPage
-      type: object
-      x-tags:
-        - LandingPages
-      properties:
-        title:
-          type: string
-        previewLink:
-          type: string
-        url:
-          type: string
-        status:
-          type: string
-          enum:
-            - active
-            - paused
-        lpType:
-          type: string
-          enum:
-            - landing
-            - prelanding
-        description:
-          type: string
-      required:
-        - title
-        - url
-        - status
-        - lpType
-      description: ''
     Payout:
-      title: Payout
       type: object
       properties:
         payout:
-          type: number
-        revenue:
-          type: number
+          description: Payout of the campaign
+          type: integer
+          format: float
+          example: 1.87
+        fixedPayout:
+          description: Payout of the campaign
+          type: integer
+          format: float
+          example: 1.87
         geo:
+          description: List of all Payout geo
           type: array
-          items:
-            type: string
-        pubIds:
-          type: array
-          items:
-            type:
-              - number
-              - string
-        landingPages:
-          type: array
-          items:
-            type:
-              - string
-              - number
-        currency:
-          type: string
-        region:
-          type: array
-          items:
-            type: string
+          example: ['US', 'IN']
         city:
+          description: List of Cities
           type: array
-          items:
-            type: string
-        goalId:
+          example: ['Mohali']
+        region:
+          description: List of Region
+          type: array
+          example: ['Punjab']
+        allowedValues:
+          description: List of Allowed Values corresponding to the variable
+          type: array
+          example: ['sub1-testing', 'sub2-testing']
+        variable:
           type: string
-      required:
-        - payout
-        - revenue
-        - geo
-      x-tags:
-        - Payouts
-      description: ''
-    Goal:
-      title: Goal
-      type: object
-      x-examples:
-        example-1:
-          title: CREATING GOAL using v2 api
-          value: apiv2_goal2
-          type: public
-          payout_model: fixed
-          payouts:
-            - payout: 2
-              revenue: 4
-              geo:
-                - IN
-      properties:
-        title:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
-        payout_model:
-          type: string
+          example: source
           enum:
-            - fixed
-            - percentage
+            - p1
+            - p2
+            - p3
+            - p4
+            - p5
+            - p6
+            - p7
+            - p8
+            - p9
+            - p10
+            - source
+
+    Goal:
+      type: object
+      properties:
+        id:
+          description: Goal ID
+          type: string
+          example: 5cebd00db6920d7e89622ccf
+        title:
+          description: Goal Title
+          type: string
+          example: Purchased
+        value:
+          description: Goal Value
+          type: string
+          example: Purchased
+        payout_model:
+          description: Payout Model
+          type: string
+          example: fixed
         payouts:
+          description: List of Goal Payouts
           type: array
           items:
-            type: object
-            properties:
-              payout:
-                type: number
-              revenue:
-                type: number
-              geo:
-                type: array
-                items:
-                  type: string
-      required:
-        - title
-        - value
-      x-tags:
-        - Campaign Goal
-      description: Goal Model to create/edit goal
+            $ref: '#/components/schemas/Payout'
+    OsVer:
+      type: object
+      properties:
+        min:
+          type: string
+          example: 4.1
+          description: Minimum OS version
+        max:
+          type: string
+          example: 9.0
+          description: Maximum OS version
+    PublisherCampaign:
+      type: object
+      properties:
+        id:
+          description: Campaign/Offer ID
+          type: integer
+          example: 18
+        title:
+          description: Campaign name
+          type: string
+          example: AppAttribution CPI-Incent
+        description:
+          description: Campaign Description
+          type: string
+          nullable: true
+          example: AppAttribution mobile app platform
+        currency:
+          description: <span class='description'>If currency is present then the payout shown by the API for that campaign is in that currency.</span>
+                       <span class='description'>If no currency then it should be assumed as USD and accordingly payout is also in USD</span>
+          type: string
+          nullable : true
+          example: USD
+          enum:
+            - INR
+            - USD
+            - EUR
+        categories:
+          description: Campaign categories
+          type: array
+          nullable: true
+          example: [Technology, Bollynews]
+        subIdsBlock:
+          description: List of Blocked Sub IDs
+          type: array
+          nullable: true
+          example: [XF152asd, TF152asd]
+        subIdsAllow:
+          description: List of Allowed Sub IDs
+          type: array
+          nullable: true
+          example: [XF152asd, TF152asd]
+        preview_url:
+          description: Destination url of the campaign
+          type: string
+          nullable: true
+          example: https://play.google.com/store/apps/details?id=io.appattribution.device
+        model:
+          description: "<span class='description'>Also if model is CPS then the payout is in percentage (Example: if payout = 70 and model = CPS, then it means payout is 70% of the sale amount not $70)</span>"
+          type: string
+          example: cpi
+          enum:
+            - cpa
+            - cpi
+            - cpc
+            - cpm
+            - cps
+        device:
+          description: List of all supported devices
+          type: array
+          nullable: true
+          example: ['mobile', 'tablet']
+          enum:
+            - mobile
+            - tablet
+            - desktop
+            - all
+        flow:
+          description: Conversion Flow
+          type: array
+          nullable: true
+          example: ['MO Flow']
+        os:
+          description: List of all operating system supported
+          type: array
+          nullable: true
+          example: ['android']
+          enum:
+            - android
+            - ios
+            - windowsphone
+            - all
+        os_version:
+          description: List of all supported os version
+          type: object
+          nullable: true
+          properties:
+            ios:
+              type: object
+              nullable: true
+              description: iOS OS supported version information
+              $ref: '#/components/schemas/OsVer'
+            android:
+              type: object
+              nullable: true
+              description: Android OS supported version information
+              $ref: '#/components/schemas/OsVer'
+            windowsphone:
+              type: object
+              nullable: true
+              description: Windows Phone OS supported version information
+              $ref: '#/components/schemas/OsVer'
+            all:
+              type: object
+              nullable: true
+              description: All OS supported version information
+              $ref: '#/components/schemas/OsVer'
+        app_id:
+          description: Application id, e.g com.example.android (Android) or id4298877253 (iOS)
+          type: string
+          nullable: true
+          example: io.appattribution.app
+        app_name:
+          description: Application name
+          type: string
+          nullable: true
+          example: AppAttribution - Mobile App Tracking
+        tracking_link:
+          description: Tracking link of the campaign/offer
+          type: string
+          example: https://trk.trackier.com/5acdefeadcxwe3dsad?p1={your-transaction-id}&source={your-sub-aff-id}
+        impressionUrl:
+          description: Impression Url of the campaign/offer
+          type: string
+          example: https://demo.trackier.net/imp?campaign_id=20931&pub_id=31
+        bot_check_url:
+          description: Botman Bot Check URL
+          nullable: true
+          type: string
+          example: https://a762.botninja.js?https://trk.vnative.com/5acdefeadcxwe3dsad
+        countries:
+          description: List of all supported countries
+          type: array
+          example: ['US', 'IN']
+        isps:
+          description: Allowed ISPs List
+          type: array
+          example: ['SpectraNet', 'ASN']
+        citiesInclude:
+          description: Allowed  Cities List
+          type: array
+          example: ['Kolkata', 'Delhi']
+        citiesExclude:
+          description: Blocked Cities List
+          type: array
+          example: ['Kolkata', 'Delhi']
+        defaultGoal:
+          description: Default Goal name
+          type: string
+          example: Install
+        payouts:
+          description: List of payouts
+          type: array
+          items:
+            $ref: '#/components/schemas/Payout'
+        goals:
+          description: List of goals
+          type: array
+          items:
+            $ref: '#/components/schemas/Goal'
+        creatives:
+          description: List of creatives associated with campaign
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Creatives'
+        cap:
+          type: object
+          description: CAP information
+          properties:
+            type:
+              type: string
+              example: conversion
+            daily:
+              type: string
+              example: 0
+            monthly:
+              type: string
+              example: 928
+            lifetime:
+              type: string
+              example: 0
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Response status
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              description: Error code
+              type: integer
+              example: 13
+            message:
+              description: Error message
+              type: string
+              example: Invalid API Key
+
+    Creatives:
+      type: object
+      properties:
+        mime_type:
+          description: File type
+          type: string
+          example: image/png
+        file_name:
+          description: Name of the file
+          type: string
+          example: 5b505e7d8213e.png
+        title:
+          description: Title of the file
+          type: string
+          nullable: true
+          example: Static Image
+        full_url:
+          description: Full URL of the file
+          type: string
+          example: https://static.vnative.co/images/5b505e7d8213e.png
+        dimensions:
+          description: Creatives dimensions
+          type: object
+          nullable: true
+          properties:
+            width:
+              description: Width of the creative (If creative is image)
+              type: number
+              format: integer
+              nullable: true
+              example: 200
+            height:
+              description: Height of the creative (If creative is image)
+              type: number
+              format: integer
+              nullable: true
+              example: 400
+
+    PublisherCampaignData:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Response status
+          example: true
+        data:
+          type: object
+          properties:
+            campaigns:
+              type: array
+              items:
+                $ref: '#/components/schemas/PublisherCampaign'
+            page:
+              type: number
+              format: integer
+              description: Current retrieved page
+              example: 1
+            count:
+              type: number
+              format: integer
+              description: Total number of campaigns
+              example: 251
+
   securitySchemes:
-    API Key Param:
-      name: apiKey
+    API Key:
       type: apiKey
-      in: query
-      description: API Key for making the requests
-tags:
-  - name: Publishers
-  - name: Caps
-  - name: Campaigns
+      name: X-Api-Key
+      in: header
