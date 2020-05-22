@@ -252,7 +252,7 @@ paths:
                   advertisers:
                     type: array
                     items:
-                      $ref: ./models/advertiser.v1.yaml
+                      $ref: ../../advertiser.yaml
                   lastId:
                     type:
                       - 'null'
