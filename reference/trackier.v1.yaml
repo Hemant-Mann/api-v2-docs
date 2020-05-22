@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: Trackier Admin API
+  version: '2.0'
+  description: "# Introduction\n\n    The Trackier API is designed for developers, engineers, or anyone else who's\n    comfortable creating custom-coded solutions or integrating with RESTful APIs.\n\n# Authorization\n\n    Some endpoints do not require any authentication, pretty much anything else\n    will require you to be authenticated.\n    <br>To become authenticated you will need to create an API Key from the web panel.\n    <br>Once you have your API Key you can pass it in the header like this:\n\n  # Base Url\n      <li>Url : https://api.trackier.com/v</li>\n      <li>Description : Main server</li>\n\n  # HTTP Status Code\n\n    Review all global errors for the Trackier API so you can get back to work fast.\n    <hr><b>400 - Bad Request</b>\n    "
+  contact:
+    name: Trackier Support
+    url: 'https://trackier.com'
+    email: support@trackier.com
+  termsOfService: 'https://trackier.com/terms-of-service'
+  license:
+    name: MIT
+servers:
+  - url: 'http://api.trackier.com'
+paths:
+  /v2/publishers:
+    get:
+      summary: Get All Publishers
+      tags:
+        - Publishers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishers:
+                    type: array
+                    items:
+                      $ref: ../publisher.v1.yaml
+      operationId: get-v2-publishers
+      description: Get all the publishers
+      security:
+        - API Key: []
+components:
+  schemas: {}
+  securitySchemes:
+    API Key:
+      name: API Key
+      type: apiKey
+      in: query
+security:
+  - API Key - 1: []
+tags:
+  - name: Publishers
